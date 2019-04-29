@@ -33,3 +33,5 @@ HELP.md
 .mvn
 mvnw
 mvnw.cmd
+
+**/application.properties
