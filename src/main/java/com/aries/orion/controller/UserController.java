@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
 
     @PostMapping("/login")
-    public String login(@RequestBody User user) {
+    public void login(@RequestBody User user) {
         System.out.println("后端被调用了=====");
-        return JSON.toJSONString(user);
+        return ;
     }
 
     @GetMapping("/test")

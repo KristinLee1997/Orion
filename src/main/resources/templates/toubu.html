@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="toubu_header">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo">Orion 在线学习系统</div>
+            <!-- 头部区域（可配合layui已有的水平导航） -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item"><a href="/">首页</a></li>
+                <li class="layui-nav-item"><a href="/questions/list">题库</a></li>
+                <li class="layui-nav-item"><a href="/questions/ranking">排行榜</a></li>
+                <li class="layui-nav-item"><a href="/discuss">讨论区</a></li>
+                <li class="layui-nav-item"><a href="/study">学习专栏</a></li>
+                <li class="layui-nav-item"><a href="/video">视频课程</a></li>
+                <li class="layui-nav-item"><a href="/questions/upload">上传题目</a></li>
+                <li class="layui-nav-item"><a href="">企业合作</a></li>
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <img src="/static/images/miao.jpeg" class="layui-nav-img">
+                        <!--                    <a href="login.html">登录</a>-->
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">基本资料</a></dd>
+                        <dd><a href="">注销</a></dd>
+                    </dl>
+                </li>
+                <!--            <li class="layui-nav-item"><a href="">注销</a></li>-->
+            </ul>
+        </div>
+    </div>
+</div>
+</html>
