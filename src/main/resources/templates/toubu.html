@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="link::head_link"></head>
 <div th:fragment="toubu_header">
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header">
@@ -23,7 +24,7 @@
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a href="">基本资料</a></dd>
-                        <dd><a href="">注销</a></dd>
+                        <dd><a id="sub" href="">注销</a></dd>
                     </dl>
                 </li>
                 <!--            <li class="layui-nav-item"><a href="">注销</a></li>-->

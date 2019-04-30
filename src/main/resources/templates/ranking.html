@@ -4,58 +4,64 @@
 
 <body class="layui-layout-body">
 <div th:include="toubu::toubu_header"></div>
-<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-    <legend>排行榜</legend>
-</fieldset>
-
-<table class="layui-table" lay-even="" lay-skin="nob">
-    <colgroup>
-        <col width="200">
-        <col width="200">
-        <col width="200">
-        <col>
-    </colgroup>
-    <thead>
-    <tr>
-        <th>排名</th>
-        <th>用户</th>
-        <th>通过数</th>
-        <th>来到Orion天数</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>1</td>
-        <td>贤心</td>
-        <td>3100</td>
-        <td>720</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>张爱玲</td>
-        <td>2900</td>
-        <td>735</td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>Helen Keller</td>
-        <td>2787</td>
-        <td>640</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>岳飞</td>
-        <td>1500</td>
-        <td>320</td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>孟子</td>
-        <td>1300</td>
-        <td>470</td>
-    </tr>
-    </tbody>
-</table>
+<div class="layui-layout layui-layout-admin">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>排行榜</legend>
+    </fieldset>
+    <div class="layui-body" style="margin-top: 50px;">
+        <div style="margin-right: 100px">
+            <table class="layui-table" lay-even="" lay-skin="nob">
+                <colgroup>
+                    <col width="200">
+                    <col width="200">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>排名</th>
+                    <th>用户</th>
+                    <th>通过数</th>
+                    <th>来到Orion天数</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>贤心</td>
+                    <td>3100</td>
+                    <td>720</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>张爱玲</td>
+                    <td>2900</td>
+                    <td>735</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Helen Keller</td>
+                    <td>2787</td>
+                    <td>640</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>岳飞</td>
+                    <td>1500</td>
+                    <td>320</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>孟子</td>
+                    <td>1300</td>
+                    <td>470</td>
+                </tr>
+                </tbody>
+            </table>
+            <div id="demo11"></div>
+        </div>
+    </div>
+</div>
 
 <script src="/static/layui/layui.js"></script>
 <script>
@@ -63,6 +69,17 @@
     layui.use('element', function () {
         var element = layui.element;
 
+    });
+    layui.use(['laypage', 'layer'], function () {
+        var laypage = layui.laypage
+            , layer = layui.layer;
+        //自定义每页条数的选择项
+        laypage.render({
+            elem: 'demo11'
+            , count: 1000
+            , limit: 100
+            , limits: [100, 300, 500]
+        });
     });
 </script>
 </body>
