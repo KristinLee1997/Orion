@@ -2,7 +2,7 @@
 <!--<html lang="en">-->
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"/>
 <head>
-    <base id="base" href="${base}">
+    <base id="base" href="/">
     <meta charset="UTF-8">
     <title>登录</title>
     <link rel="stylesheet" type="text/css" href="/static/login/login/css/normalize.css" />
@@ -29,8 +29,8 @@
                         <span class="us_uer"></span>
                         <input name="password" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入密码">
                     </div>
-                    <div class="mb2"><a id = "sub" lay-filter="sub" class="act-but submit" href="" style="color: #FFFFFF">注册</a></div>
-                    <div class="mb2"><a id = "sub2" lay-filter="sub" class="act-but submit" href="" style="color: #FFFFFF">登录</a></div>
+                    <div class="mb2"><a id = "sub_reg" lay-filter="sub_reg" class="act-but submit" href="" style="color: #FFFFFF">注册</a></div>
+                    <div class="mb2"><a id = "sub_login" lay-filter="sub_login" class="act-but submit" href="" style="color: #FFFFFF">登录</a></div>
                 </form>
             </div>
         </div>
@@ -48,12 +48,12 @@
         var layer = layui.layer;
 
         //注册的点击事件
-        $("#sub").on("click",function(){
+        $("#sub_reg").on("click",function(){
             register();
         });
 
         //登录的点击事件
-        $("#sub2").on("click",function(){
+        $("#sub_login").on("click",function(){
             login();
         });
 
@@ -73,12 +73,12 @@
                 dataType:"json",
                 contentType: "application/json",
                 success:function(data){
-                    // if(data.success){
-                    //     window.location = "index";
-                    // }else{
-                    //     layer.msg(data.msg);
-                    // }
-                    alert('请求成功');
+                    if(data.success){
+                        window.location = "index";
+                    }else{
+                        layer.msg(data.msg);
+                    }
+                    // alert('请求成功');
                 }
             })
         }
@@ -87,6 +87,7 @@
         function login(){
             var username = $(" input[ name='username' ] ").val();
             var password = $(" input[ name='password' ] ").val();
+            // alert('请求成功aaaaaaa');
             $.ajax({
                 url:"/user/login",
                 data:JSON.stringify({"username":username,"password":password}),
@@ -94,12 +95,13 @@
                 dataType:"json",
                 contentType: "application/json",
                 success:function(data){
-                    // if(data.success){
-                    //     window.location = "index";
-                    // }else{
-                    //     layer.msg(data.msg);
-                    // }
+                    if(data.success){
+                        window.location = "index";
+                    }else{
+                        layer.msg(data.msg);
+                    }
                     alert('请求成功');
+                    console.log(data);
                 }
             })
         }

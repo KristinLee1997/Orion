@@ -15,15 +15,30 @@
         </div>
     </div>
 
+    <!--    <div class="layui-form-item">-->
+    <!--        <label class="layui-form-label">类型</label>-->
+    <!--        <div class="layui-input-block">-->
+    <!--            <select name="question_type" lay-filter="question_type">-->
+    <!--                <option value="" selected=""></option>-->
+    <!--                <option value="0">填空题</option>-->
+    <!--                <option value="1">选择题</option>-->
+    <!--            </select>-->
+    <!--        </div>-->
+    <!--    </div>-->
     <div class="layui-form-item">
-        <label class="layui-form-label">类型</label>
-        <div class="layui-input-block">
-            <select name="question_type" lay-filter="question_type">
-                <option value="" selected=""></option>
-                <option value="0">填空题</option>
-                <option value="1">选择题</option>
-            </select>
+        <label class="layui-form-label" style="width:100px">类型</label>
+        <div class="layui-input-block" id="IsPurchased" >
+            <input type="radio"  name="t" value="选择" title="选择" lay-filter="aaa"/>
+            <input type="radio"  name="t" value="填空" title="填空" lay-filter="aaa"/>
         </div>
+    </div>
+
+    <div class="layui-form-item count">
+        <label class="layui-form-label">选择题选项</label>
+        <div class="layui-input-inline">
+            <input type="text" id="ProbationAccount" required="required"  placeholder="请输入选择题选项内容" autocomplete="off" class="layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
     </div>
 
     <div class="layui-form-item">
@@ -50,6 +65,7 @@
             <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
         </div>
     </div>
+
     <div class="layui-form-item">
         <label class="layui-form-label">答案</label>
         <div class="layui-input-block">
@@ -63,6 +79,7 @@
 
 
 <script src="/static/layui/layui.js" charset="utf-8"></script>
+<script src="/static/jquery/jquery.min.js"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
     //JavaScript代码区域
@@ -83,11 +100,11 @@
             , text: true
             , setText: function (value) { //自定义文本的回调
                 var arrs = {
-                    '1': '极差'
-                    , '2': '差'
+                    '1': '简单'
+                    , '2': '正常'
                     , '3': '中等'
-                    , '4': '好'
-                    , '5': '极好'
+                    , '4': '困难'
+                    , '5': '特难'
                 };
                 this.span.text(arrs[value] || (value + "星"));
             }
@@ -126,6 +143,23 @@
         });
 
     });
+
+    // 单选按钮判断输入框显隐
+    layui.use('form', function () {
+        var form = layui.form;
+
+        form.on('radio(aaa)', function (data) {
+
+            if ($('#IsPurchased input[name="t"]:checked ').val() == "填空") {
+                $(".count").hide();
+            }
+            else {
+                $(".count").show();
+            }
+            form.render();
+        });
+    });
+
 </script>
 
 </body>
