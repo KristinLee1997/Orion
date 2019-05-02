@@ -24,13 +24,13 @@
 <script src="/static/layui/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
-    layui.use(['element', 'layer'], function(){
+    layui.use(['element', 'layer'], function () {
         var element = layui.element;
         var layer = layui.layer;
 
         //监听折叠
-        element.on('collapse(test)', function(data){
-            layer.msg('展开状态：'+ data.show);
+        element.on('collapse(test)', function (data) {
+            layer.msg('展开状态：' + data.show);
         });
     });
 </script>

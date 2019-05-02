@@ -27,16 +27,17 @@
     <!--    </div>-->
     <div class="layui-form-item">
         <label class="layui-form-label" style="width:100px">类型</label>
-        <div class="layui-input-block" id="IsPurchased" >
-            <input type="radio"  name="t" value="选择" title="选择" lay-filter="aaa"/>
-            <input type="radio"  name="t" value="填空" title="填空" lay-filter="aaa"/>
+        <div class="layui-input-block" id="IsPurchased">
+            <input type="radio" name="t" value="选择" title="选择" lay-filter="aaa"/>
+            <input type="radio" name="t" value="填空" title="填空" lay-filter="aaa"/>
         </div>
     </div>
 
     <div class="layui-form-item count">
         <label class="layui-form-label">选择题选项</label>
         <div class="layui-input-inline">
-            <input type="text" id="ProbationAccount" required="required"  placeholder="请输入选择题选项内容" autocomplete="off" class="layui-input" />
+            <input type="text" id="ProbationAccount" required="required" placeholder="请输入选择题选项内容" autocomplete="off"
+                   class="layui-input"/>
         </div>
         <div class="layui-form-mid layui-word-aux"></div>
     </div>
@@ -152,8 +153,7 @@
 
             if ($('#IsPurchased input[name="t"]:checked ').val() == "填空") {
                 $(".count").hide();
-            }
-            else {
+            } else {
                 $(".count").show();
             }
             form.render();

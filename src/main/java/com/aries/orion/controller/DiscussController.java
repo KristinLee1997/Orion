@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class DiscussController {
     @GetMapping("/discuss")
     public String discuss() {
+
         return "discuss";
     }
 }

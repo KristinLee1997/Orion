@@ -16,6 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <github.global.server>github</github.global.server>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -24,6 +25,14 @@
     <repositories>
         <repository>
             <id>maven-repo-master</id>
+            <url>https://raw.github.com/KristinLee1997/maven-repo/master/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>maven-repo-arowana</id>
             <url>https://raw.github.com/goldarowana/maven-repo/master/</url>
             <snapshots>
                 <enabled>true</enabled>
@@ -36,7 +45,7 @@
             <dependency>
                 <groupId>com.aries.maven</groupId>
                 <artifactId>aries-dependency</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.0.2-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -93,6 +102,10 @@
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>com.aries.user</groupId>
+            <artifactId>gaea-client</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -101,7 +114,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-
             <!-- mybatis generator 自动生成代码插件 -->
             <plugin>
                 <groupId>org.mybatis.generator</groupId>

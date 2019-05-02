@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--日志级别：TRACE < DEBUG < INFO < WARN < ERROR < FATAL,如果设置为WARN，则低于WARN的信息都不会输出-->
+<!--
+    status : 这个用于设置log4j2自身内部的信息输出,可以不设置,当设置成trace时,会看到log4j2内部各种详细输出
+    monitorInterval : Log4j能够自动检测修改配置文件和重新配置本身, 设置间隔秒数。此处表示每隔300秒重读一次配置文件
+-->
+<Configuration status="ERROR" monitorInterval="300">
+    <properties>
+        <property name="LOG_HOME">/opt/log</property>
+        <property name="PROJECT_NAME">Orion</property>
+    </properties>
+    <Appenders>
+        <Console name="con" target="SYSTEM_OUT"> <!-- 定义类型为Console的Appender -->
+            <PatternLayout
+                    pattern="%d{yyyy.MM.dd 'at' HH:mm:ss.SSS} [%-5level] %t %c{10} %M %L %n%msg%n"/> <!-- 定义类型为Pattern的Layout -->
+        </Console>
+
+        <RollingFile name="infoRollingFile" fileName="${LOG_HOME}/${PROJECT_NAME}/info.log"
+                     filePattern="%d{yyyyMMdd}.info.log">
+            <PatternLayout pattern="%d{yyyy.MM.dd 'at' HH:mm:ss.SSS} [%-5level] %t %c{10} %M %L %n%msg%n"/>
+            <SizeBasedTriggeringPolicy size="10MB"/> <!-- 日志文件大小 -->
+            <DefaultRolloverStrategy max="20"/> <!-- 最多保留文件数 -->
+            <!--<Append value="false"/>-->  <!--追加模式还是覆盖模式-->
+            <Filters>
+                <!--如果是warn\error级别拒绝-->
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <!--如果是debug\info输出-->
+                <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+
+        <RollingFile name="errorRollingFile" fileName="${LOG_HOME}/${PROJECT_NAME}/error.log"
+                     filePattern="%d{yyyyMMdd}.error.log">
+            <PatternLayout pattern="%d{yyyy.MM.dd 'at' HH:mm:ss.SSS} [%-5level] %t %c{10} %M %L %n%msg%n"/>
+            <SizeBasedTriggeringPolicy size="10MB"/><!-- 日志文件大小 -->
+            <DefaultRolloverStrategy max="20"/> <!-- 最多保留文件数 -->
+            <!--<Append value="false"/>-->  <!--追加模式还是覆盖模式-->
+            <Filters>
+                <!--如果是warn\error输出-->
+                <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+    </Appenders>
+    <!--定义logger，只有定义了logger并引入上面的appender，appender才会生效-->
+    <Loggers>
+        <Root level="debug"> <!-- 定义Root Logger -->
+            <AppenderRef ref="con"/> <!-- Root Logger的Appender引用上面定义的Console -->
+        </Root>
+
+        <Logger name="com.aries.department.orion" level="info" additivity="true">
+            <AppenderRef ref="infoRollingFile"/> <!-- Root Logger的Appender引用上面定义的Console -->
+            <AppenderRef ref="errorRollingFile"/> <!-- Root Logger的Appender引用上面定义的Console -->
+        </Logger>
+        <!--        <Logger name="com.aries.hera" level="debug" additivity="true">-->
+        <!--            <AppenderRef ref="infoRollingFile"/> &lt;!&ndash; Root Logger的Appender引用上面定义的Console &ndash;&gt;-->
+        <!--            <AppenderRef ref="errorRollingFile"/> &lt;!&ndash; Root Logger的Appender引用上面定义的Console &ndash;&gt;-->
+        <!--        </Logger>-->
+
+        <!--        <Logger name="org.apache.zookeeper" level="warn" additivity="true"/>-->
+        <!--        <Logger name="org.apache.curator" level="warn" additivity="true"/>-->
+    </Loggers>
+</Configuration>

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <!--<html lang="en">-->
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"/>
+<html xmlns="http://www.w3.org/1999/xhtml"/>
 <head>
     <base id="base" href="/">
     <meta charset="UTF-8">
     <title>登录</title>
-    <link rel="stylesheet" type="text/css" href="/static/login/login/css/normalize.css" />
-    <link rel="stylesheet" type="text/css" href="/static/login/login/css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="/static/login/login/css/normalize.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/login/login/css/demo.css"/>
     <!--必要样式-->
-    <link rel="stylesheet" type="text/css" href="/static/login/login/css/component.css" />
-    <link rel="stylesheet" type="text/css" href="/static/login/layui/css/layui.css" />
+    <link rel="stylesheet" type="text/css" href="/static/login/login/css/component.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/login/layui/css/layui.css"/>
     <script type="text/javascript" src="/static/login/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/static/login/layui/layui.js"></script>
 </head>
@@ -23,14 +23,19 @@
                 <form action="#" name="f" method="post">
                     <div class="input_outer">
                         <span class="u_user"></span>
-                        <input name="username" class="text" style="color: #FFFFFF !important" type="text" placeholder="账号/手机号/邮箱">
+                        <input name="phonenumber" class="text" style="color: #FFFFFF !important" type="text"
+                               placeholder="手机号">
                     </div>
                     <div class="input_outer">
                         <span class="us_uer"></span>
-                        <input name="password" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入密码">
+                        <input name="password" class="text"
+                               style="color: #FFFFFF !important; position:absolute; z-index:100;" value=""
+                               type="password" placeholder="请输入密码"/>
                     </div>
-                    <div class="mb2"><a id = "sub_reg" lay-filter="sub_reg" class="act-but submit" href="" style="color: #FFFFFF">注册</a></div>
-                    <div class="mb2"><a id = "sub_login" lay-filter="sub_login" class="act-but submit" href="" style="color: #FFFFFF">登录</a></div>
+                    <div class="mb2">
+                        <a id="sub_login" lay-filter="sub_login" class="act-but submit" href=""
+                           style="color: #FFFFFF">登录</a>
+                    </div>
                 </form>
             </div>
         </div>
@@ -43,61 +48,36 @@
 </body>
 <script>
     //加载弹出层组件
-    layui.use('layer',function(){
+    layui.use('layer', function () {
 
         var layer = layui.layer;
 
-        //注册的点击事件
-        $("#sub_reg").on("click",function(){
-            register();
-        });
-
         //登录的点击事件
-        $("#sub_login").on("click",function(){
+        $("#sub_login").on("click", function () {
             login();
         });
 
-        $("body").keydown(function(){
-            if(event.keyCode == "13"){
+        $("body").keydown(function () {
+            if (event.keyCode == "13") {
                 login();
             }
         });
-        //注册函数
-        function register(){
-            var username = $(" input[ name='username' ] ").val();
-            var password = $(" input[ name='password' ] ").val();
-            $.ajax({
-                url:"/user/register",
-                data:JSON.stringify({"username":username,"password":password}),
-                type:"post",
-                dataType:"json",
-                contentType: "application/json",
-                success:function(data){
-                    if(data.success){
-                        window.location = "index";
-                    }else{
-                        layer.msg(data.msg);
-                    }
-                    // alert('请求成功');
-                }
-            })
-        }
 
         //登录函数
-        function login(){
-            var username = $(" input[ name='username' ] ").val();
+        function login() {
+            var phonenumber = $(" input[ name='phonenumber' ] ").val();
             var password = $(" input[ name='password' ] ").val();
             // alert('请求成功aaaaaaa');
             $.ajax({
-                url:"/user/login",
-                data:JSON.stringify({"username":username,"password":password}),
-                type:"post",
-                dataType:"json",
+                url: "/user/login",
+                data: JSON.stringify({"phonenumber": phonenumber, "password": password}),
+                type: "post",
+                dataType: "json",
                 contentType: "application/json",
-                success:function(data){
-                    if(data.success){
+                success: function (data) {
+                    if (data.success) {
                         window.location = "index";
-                    }else{
+                    } else {
                         layer.msg(data.msg);
                     }
                     alert('请求成功');
