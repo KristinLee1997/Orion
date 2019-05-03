@@ -106,6 +106,10 @@
             <groupId>com.aries.user</groupId>
             <artifactId>gaea-client</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.aries.hermes</groupId>
+            <artifactId>hermes-client-thrift</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

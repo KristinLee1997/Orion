@@ -9,218 +9,31 @@
         <legend>讨论区</legend>
     </fieldset>
     <div class="layui-body" style="margin-top: 50px;">
-        <a href="/">
-            <fieldset class="layui-elem-field" style="margin-right: 100px">
-                <legend>
-                    <img src="/static/images/miao.jpeg" style="width:50px; height:50px; border-radius:50%;">
-                    Kris1
-                </legend>
-                <div class="layui-row">
-                    <div class="layui-field-box">
-                        你可以在这里放任何内容，比如表单神马的
-                    </div>
-                    <div class="layui-field-box">
-                        <div class="layui-col-md8">&nbsp;</div>
-                        <div class="layui-col-md4">
-                            <div class="layui-row">
-                                <div class="layui-col-md6">时间：2019-01-11</div>
-                                <div class="layui-col-md6">回复：210</div>
+        <div th:each="discuss: ${disscussvolist}">
+            <a th:href="@{/discuss/{topicid}(topicid=${discuss.id})}">
+                <fieldset class="layui-elem-field" style="margin-right: 100px">
+                    <legend>
+                        <img src="/static/images/miao.jpeg" style="width:50px; height:50px; border-radius:50%;">
+                        <span th:text="${discuss.username}"></span>
+                    </legend>
+                    <div class="layui-row">
+                        <div class="layui-field-box">
+                            <p th:text="${discuss.theme}"></p>
+                        </div>
+                        <div class="layui-field-box">
+                            <div class="layui-col-md8">&nbsp;</div>
+                            <div class="layui-col-md4">
+                                <div class="layui-row">
+                                    <div class="layui-col-md6"><span th:text="${discuss.insertTime}"></span></div>
+                                    <div class="layui-col-md6">回复：<span th:text="${discuss.replyNum}"></span></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-            </fieldset>
-        </a>
-        <a href="/">
-            <fieldset class="layui-elem-field" style="margin-right: 100px">
-                <legend><img src="/static/images/eat.jpeg" style="width:50px; height:50px; border-radius:50%;">Kris1
-                </legend>
-                <div class="layui-row">
-                    <div class="layui-field-box">
-                        你可以在这里放任何内容，比如表单神马的
-                    </div>
-                    <div class="layui-field-box">
-                        <div class="layui-col-md8">&nbsp;</div>
-                        <div class="layui-col-md4">
-                            <div class="layui-row">
-                                <div class="layui-col-md6">时间：2019-01-11</div>
-                                <div class="layui-col-md6">回复：210</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </fieldset>
-        </a>
-        <a href="/">
-            <fieldset class="layui-elem-field" style="margin-right: 100px">
-                <legend><img src="/static/images/play.jpeg" style="width:50px; height:50px; border-radius:50%;">Kris1
-                </legend>
-                <div class="layui-row">
-                    <div class="layui-field-box">
-                        你可以在这里放任何内容，比如表单神马的
-                    </div>
-                    <div class="layui-field-box">
-                        <div class="layui-col-md8">&nbsp;</div>
-                        <div class="layui-col-md4">
-                            <div class="layui-row">
-                                <div class="layui-col-md6">时间：2019-01-11</div>
-                                <div class="layui-col-md6">回复：210</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </fieldset>
-        </a>
-        <a href="/">
-            <fieldset class="layui-elem-field" style="margin-right: 100px">
-                <legend><img src="/static/images/miao.jpeg" style="width:50px; height:50px; border-radius:50%;">Kris1
-                </legend>
-                <div class="layui-row">
-                    <div class="layui-field-box">
-                        你可以在这里放任何内容，比如表单神马的
-                    </div>
-                    <div class="layui-field-box">
-                        <div class="layui-col-md8">&nbsp;</div>
-                        <div class="layui-col-md4">
-                            <div class="layui-row">
-                                <div class="layui-col-md6">时间：2019-01-11</div>
-                                <div class="layui-col-md6">回复：210</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </fieldset>
-        </a>
-        <a href="/">
-            <fieldset class="layui-elem-field" style="margin-right: 100px">
-                <legend><img src="/static/images/miao.jpeg" style="width:50px; height:50px; border-radius:50%;">Kris1
-                </legend>
-                <div class="layui-row">
-                    <div class="layui-field-box">
-                        你可以在这里放任何内容，比如表单神马的
-                    </div>
-                    <div class="layui-field-box">
-                        <div class="layui-col-md8">&nbsp;</div>
-                        <div class="layui-col-md4">
-                            <div class="layui-row">
-                                <div class="layui-col-md6">时间：2019-01-11</div>
-                                <div class="layui-col-md6">回复：210</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </fieldset>
-        </a>
-        <a href="/">
-            <fieldset class="layui-elem-field" style="margin-right: 100px">
-                <legend><img src="/static/images/miao.jpeg" style="width:50px; height:50px; border-radius:50%;">Kris1
-                </legend>
-                <div class="layui-row">
-                    <div class="layui-field-box">
-                        你可以在这里放任何内容，比如表单神马的
-                    </div>
-                    <div class="layui-field-box">
-                        <div class="layui-col-md8">&nbsp;</div>
-                        <div class="layui-col-md4">
-                            <div class="layui-row">
-                                <div class="layui-col-md6">时间：2019-01-11</div>
-                                <div class="layui-col-md6">回复：210</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </fieldset>
-        </a>
-        <a href="/">
-            <fieldset class="layui-elem-field" style="margin-right: 100px">
-                <legend><img src="/static/images/miao.jpeg" style="width:50px; height:50px; border-radius:50%;">Kris1
-                </legend>
-                <div class="layui-row">
-                    <div class="layui-field-box">
-                        你可以在这里放任何内容，比如表单神马的
-                    </div>
-                    <div class="layui-field-box">
-                        <div class="layui-col-md8">&nbsp;</div>
-                        <div class="layui-col-md4">
-                            <div class="layui-row">
-                                <div class="layui-col-md6">时间：2019-01-11</div>
-                                <div class="layui-col-md6">回复：210</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </fieldset>
-        </a>
-        <a href="/">
-            <fieldset class="layui-elem-field" style="margin-right: 100px">
-                <legend><img src="/static/images/miao.jpeg" style="width:50px; height:50px; border-radius:50%;">Kris1
-                </legend>
-                <div class="layui-row">
-                    <div class="layui-field-box">
-                        你可以在这里放任何内容，比如表单神马的
-                    </div>
-                    <div class="layui-field-box">
-                        <div class="layui-col-md8">&nbsp;</div>
-                        <div class="layui-col-md4">
-                            <div class="layui-row">
-                                <div class="layui-col-md6">时间：2019-01-11</div>
-                                <div class="layui-col-md6">回复：210</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </fieldset>
-        </a>
-        <a href="/">
-            <fieldset class="layui-elem-field" style="margin-right: 100px">
-                <legend><img src="/static/images/miao.jpeg" style="width:50px; height:50px; border-radius:50%;">Kris1
-                </legend>
-                <div class="layui-row">
-                    <div class="layui-field-box">
-                        你可以在这里放任何内容，比如表单神马的
-                    </div>
-                    <div class="layui-field-box">
-                        <div class="layui-col-md8">&nbsp;</div>
-                        <div class="layui-col-md4">
-                            <div class="layui-row">
-                                <div class="layui-col-md6">时间：2019-01-11</div>
-                                <div class="layui-col-md6">回复：210</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </fieldset>
-        </a>
-        <a href="/">
-            <fieldset class="layui-elem-field" style="margin-right: 100px">
-                <legend><img src="/static/images/miao.jpeg" style="width:50px; height:50px; border-radius:50%;">Last1
-                </legend>
-                <div class="layui-row">
-                    <div class="layui-field-box">
-                        你可以在这里放任何内容，比如表单神马的
-                    </div>
-                    <div class="layui-field-box">
-                        <div class="layui-col-md8">&nbsp;</div>
-                        <div class="layui-col-md4">
-                            <div class="layui-row">
-                                <div class="layui-col-md6">时间：2019-01-11</div>
-                                <div class="layui-col-md6">回复：210</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </fieldset>
-        </a>
+                </fieldset>
+            </a>
+        </div>
     </div>
 
     <script src="/static/layui/layui.js"></script>
