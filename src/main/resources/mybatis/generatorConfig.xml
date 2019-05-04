@@ -48,6 +48,10 @@
             <columnOverride column="description" jdbcType="VARCHAR"/>
             <columnOverride column="answer" jdbcType="VARCHAR"/>
         </table>
+        <table tableName="category" domainObjectName="Category" enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
     </context>
 
     <!--参考：https://www.cnblogs.com/zslli/p/8779449.html-->

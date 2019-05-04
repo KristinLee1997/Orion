@@ -1,7 +1,9 @@
 package com.aries.orion.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.aries.orion.model.po.Category;
 import com.aries.orion.model.po.Question;
+import com.aries.orion.model.vo.QuestionVO;
 import com.aries.orion.service.QuestionService;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -11,8 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -22,9 +26,11 @@ public class QuestionController {
     private QuestionService questionService;
 
     @GetMapping("/list")
-    public String list() {
-
-        return "questions";
+    public ModelAndView list() {
+        List<QuestionVO> questionList = questionService.getQuestionList(1, 20);
+        ModelAndView modelAndView = new ModelAndView("questions");
+        modelAndView.addObject("questionvolist", questionList);
+        return modelAndView;
     }
 
     @GetMapping("/ranking")
@@ -40,9 +46,12 @@ public class QuestionController {
         return "upload";
     }
 
-    @GetMapping("/upload/test")
-    public String uploadT() {
-        return "upload";
+    @GetMapping("/upload/detail")
+    public ModelAndView uploadT() {
+        List<Category> categoryList = questionService.selectAllCategory();
+        ModelAndView modelAndView = new ModelAndView("upload");
+        modelAndView.addObject("categorylist", categoryList);
+        return modelAndView;
     }
 
     @GetMapping("/aa")

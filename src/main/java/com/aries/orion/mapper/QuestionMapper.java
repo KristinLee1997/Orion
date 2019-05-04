@@ -3,11 +3,8 @@ package com.aries.orion.mapper;
 import com.aries.orion.model.po.Question;
 import com.aries.orion.model.po.QuestionExample;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-@Mapper
 public interface QuestionMapper {
     int countByExample(QuestionExample example);
 

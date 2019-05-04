@@ -50,10 +50,9 @@
         <div class="layui-input-block">
             <select name="categoryId" lay-filter="question_category">
                 <option value="" selected=""></option>
-                <option value="0">数据库</option>
-                <option value="1">算法</option>
-                <option value="2">框架</option>
-                <option value="3">操作系统</option>
+                <option th:each="category:${categorylist}"
+                        th:value="${category.id}"
+                        th:text="${category.categoryName}"></option>
             </select>
         </div>
     </div>

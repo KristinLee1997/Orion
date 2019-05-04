@@ -31,14 +31,11 @@ public class DiscussController {
 
     @GetMapping("/{topicid}")
     public ModelAndView getdiscussDetail(@PathVariable("topicid") Long topicid) {
-        System.out.println("TopicId: " + topicid);
         ModelAndView modelAndView = new ModelAndView("discuss_reply");
         DisscussVo disscussVo = discussService.getDiscussById(topicid);
         List<ReplyVO> discussDetail = discussService.getDiscussDetail(topicid, 1, 20);
-        System.out.println(discussDetail);
         modelAndView.addObject("discussvo", disscussVo);
         modelAndView.addObject("discussdetail", discussDetail);
-        System.out.println(JSON.toJSONString(disscussVo));
         return modelAndView;
     }
 }

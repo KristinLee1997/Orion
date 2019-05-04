@@ -32,121 +32,16 @@
                     <th>题目</th>
                     <th>类别</th>
                     <th>难度</th>
-                    <th>通过</th>
+                    <th>通过人数</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>数据库范式有几大范式？</td>
-                    <td>数据库</td>
-                    <td>简单</td>
-                    <td>已通过</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>两数之和</td>
-                    <td>算法</td>
-                    <td>简单</td>
-                    <td>已通过</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Spring的事务问题</td>
-                    <td>框架</td>
-                    <td>中等</td>
-                    <td>已通过</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>LRU算法</td>
-                    <td>操作系统</td>
-                    <td>困难</td>
-                    <td>未通过</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>下列哪个不是键值型数据库</td>
-                    <td>数据库</td>
-                    <td>简单</td>
-                    <td>已通过</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>下列哪个不是键值型数据库</td>
-                    <td>数据库</td>
-                    <td>简单</td>
-                    <td>已通过</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>下列哪个不是键值型数据库</td>
-                    <td>数据库</td>
-                    <td>简单</td>
-                    <td>已通过</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>下列哪个不是键值型数据库</td>
-                    <td>数据库</td>
-                    <td>简单</td>
-                    <td>已通过</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>下列哪个不是键值型数据库</td>
-                    <td>数据库</td>
-                    <td>简单</td>
-                    <td>已通过</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>下列哪个不是键值型数据库</td>
-                    <td>数据库</td>
-                    <td>简单</td>
-                    <td>已通过</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>下列哪个不是键值型数据库</td>
-                    <td>数据库</td>
-                    <td>简单</td>
-                    <td>已通过</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>下列哪个不是键值型数据库</td>
-                    <td>数据库</td>
-                    <td>简单</td>
-                    <td>已通过</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>下列哪个不是键值型数据库</td>
-                    <td>数据库</td>
-                    <td>简单</td>
-                    <td>已通过</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>下列哪个不是键值型数据库</td>
-                    <td>数据库</td>
-                    <td>简单</td>
-                    <td>已通过</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>下列哪个不是键值型数据库</td>
-                    <td>数据库</td>
-                    <td>简单</td>
-                    <td>已通过</td>
-                </tr>
-                <tr>
-                    <td>20</td>
-                    <td>下列哪个不是键值型数据库</td>
-                    <td>数据库</td>
-                    <td>简单</td>
-                    <td>已通过</td>
+                <tr th:each="questionvo:${questionvolist}">
+                    <td th:text="${questionvo.id}"></td>
+                    <td th:text="${questionvo.title}"></td>
+                    <td th:text="${questionvo.categoryName}"></td>
+                    <td th:text="${questionvo.difficulty}"></td>
+                    <td th:text="${questionvo.passNum}"></td>
                 </tr>
                 </tbody>
             </table>
@@ -175,5 +70,4 @@
     });
 </script>
 </body>
-
 </html>
