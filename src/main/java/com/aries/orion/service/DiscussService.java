@@ -11,4 +11,8 @@ public interface DiscussService {
     DisscussVo getDiscussById(Long topicId);
 
     List<ReplyVO> getDiscussDetail(Long topicId, Integer page, Integer pageSize);
+
+    Boolean addTopic(DisscussVo disscussVo);
+
+    Boolean addReply(ReplyVO replyVO);
 }

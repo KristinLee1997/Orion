@@ -1,18 +1,21 @@
 package com.aries.orion.service.impl;
 
+import com.aries.hera.client.thrift.exception.ServiceNotFoundException;
 import com.aries.hermes.client.thrift.exception.CallFailedException;
 import com.aries.hermes.client.thrift.exception.PageSizeLimitException;
 import com.aries.hermes.client.thrift.facade.ReplyFacade;
 import com.aries.hermes.client.thrift.facade.TopicFacade;
 import com.aries.hermes.client.thrift.vo.ReplyVO;
 import com.aries.hermes.client.thrift.vo.TopicVO;
-import com.aries.orion.service.DiscussService;
+import com.aries.hermes.idl.dto.ThriftResponse;
 import com.aries.orion.model.vo.DisscussVo;
+import com.aries.orion.service.DiscussService;
 import com.aries.user.gaea.client.model.GaeaResponse;
 import com.aries.user.gaea.client.model.User;
 import com.aries.user.gaea.client.utils.UserUtils;
 import com.aries.user.gaea.contact.model.UserInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.thrift.transport.TTransportException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -81,6 +84,36 @@ public class DiscussServiceImpl implements DiscussService {
         return replyVOS;
     }
 
+    @Override
+    public Boolean addTopic(DisscussVo disscussVo) {
+        disscussVo.setGaeaid(6L);
+        ThriftResponse response = null;
+        try {
+            response = TopicFacade.addTopic(convertDisscussVo2TopicVO(disscussVo));
+        } catch (ServiceNotFoundException e) {
+            log.error("发送主帖服务找不到");
+            return false;
+        } catch (TTransportException e) {
+            log.error("发送主帖服务异常");
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean addReply(ReplyVO replyVO) {
+        try {
+            ThriftResponse response = ReplyFacade.addReply(replyVO);
+        } catch (ServiceNotFoundException e) {
+            log.error("回复主帖服务找不到");
+            return false;
+        } catch (TTransportException e) {
+            log.error("回复主帖服务异常");
+            return false;
+        }
+        return true;
+    }
+
     private DisscussVo convertTopicVO2DiscussVo(TopicVO topicVO) {
         GaeaResponse gaeaResponse = UserUtils.getUserInfoById(topicVO.getGaeaId());
         User user = (User) gaeaResponse.getData();
@@ -96,4 +129,26 @@ public class DiscussServiceImpl implements DiscussService {
         return disscussVo;
     }
 
+    private TopicVO convertDisscussVo2TopicVO(DisscussVo disscussVo) {
+        TopicVO.TopicVOBuilder topicVOBuilder = TopicVO.TopicVOBuilder.aTopicVO();
+        if (disscussVo.getTheme() != null) {
+            topicVOBuilder.theme(disscussVo.getTheme());
+        }
+        if (disscussVo.getContent() != null) {
+            topicVOBuilder.content(disscussVo.getContent());
+        }
+        if (disscussVo.getCategoryId() != null) {
+            topicVOBuilder.categoryId(disscussVo.getCategoryId());
+        }
+        if (disscussVo.getGaeaid() != null && disscussVo.getGaeaid() > 0) {
+            topicVOBuilder.gaeaId(disscussVo.getGaeaid());
+        }
+        if (disscussVo.getAnonymousReply() != null) {
+            topicVOBuilder.anonymousReply(disscussVo.getAnonymousReply());
+        }
+        if (disscussVo.getAnonymousSend() != null) {
+            topicVOBuilder.anonymousSend(disscussVo.getAnonymousSend());
+        }
+        return topicVOBuilder.build();
+    }
 }

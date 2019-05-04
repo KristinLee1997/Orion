@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:include="link::head_link"></head>
+<head>
+    <meta charset="utf-8">
+    <title>Orion</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" href="/static/images/miao.jpeg" type="image/x-icon"/>
+    <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/X-admin/css/font.css">
+<!--    <link rel="stylesheet" href="/static/X-admin/css/xadmin.css">-->
+    <script src="/static/X-admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/X-admin/js/xadmin.js"></script>
+</head>
 
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -8,31 +20,45 @@
     <fieldset class="layui-elem-field layui-field-title">
         <legend>讨论区</legend>
     </fieldset>
+    <!--    <div align="right">-->
+    <!--        <button class="layui-btn layui-btn-lg">-->
+    <!--            <i class="layui-icon">&#xe642;</i>-->
+    <!--        </button>-->
+    <!--    </div>-->
+
     <div class="layui-body" style="margin-top: 50px;">
-        <div th:each="discuss: ${disscussvolist}">
-            <a th:href="@{/discuss/{topicid}(topicid=${discuss.id})}">
-                <fieldset class="layui-elem-field" style="margin-right: 100px">
-                    <legend>
-                        <img src="/static/images/miao.jpeg" style="width:50px; height:50px; border-radius:50%;">
-                        <span th:text="${discuss.username}"></span>
-                    </legend>
-                    <div class="layui-row">
-                        <div class="layui-field-box">
-                            <p th:text="${discuss.theme}"></p>
-                        </div>
-                        <div class="layui-field-box">
-                            <div class="layui-col-md8">&nbsp;</div>
-                            <div class="layui-col-md4">
-                                <div class="layui-row">
-                                    <div class="layui-col-md6"><span th:text="${discuss.insertTime}"></span></div>
-                                    <div class="layui-col-md6">回复：<span th:text="${discuss.replyNum}"></span></div>
+        <div class="layui-col-md11">
+            <div th:each="discuss: ${disscussvolist}">
+                <a th:href="@{/discuss/{topicid}(topicid=${discuss.id})}">
+                    <fieldset class="layui-elem-field" style="margin-right: 100px">
+                        <legend>
+                            <img src="/static/images/miao.jpeg" style="width:50px; height:50px; border-radius:50%;">
+                            <span th:text="${discuss.username}"></span>
+                        </legend>
+                        <div class="layui-row">
+                            <div class="layui-field-box">
+                                <p th:text="${discuss.theme}"></p>
+                            </div>
+                            <div class="layui-field-box">
+                                <div class="layui-col-md8">&nbsp;</div>
+                                <div class="layui-col-md4">
+                                    <div class="layui-row">
+                                        <div class="layui-col-md6"><span th:text="${discuss.insertTime}"></span></div>
+                                        <div class="layui-col-md6">回复人数：<span th:text="${discuss.replyNum}"></span></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                </fieldset>
-            </a>
+                    </fieldset>
+                </a>
+            </div>
+        </div>
+        <div class="layui-col-md1">
+            <div class="layui-card-header" align="right">
+                <button class="layui-btn layui-btn-lg" onclick="xadmin.open('发布主帖','/templates/topic-add.html',800,600)">
+                    <i class="layui-icon">&#xe642;</i></button>
+            </div>
         </div>
     </div>
 
@@ -42,21 +68,6 @@
         layui.use('element', function () {
             var element = layui.element;
 
-        });
-
-        layui.use(['util', 'layer'], function () {
-            var util = layui.util;
-            //固定块
-            util.fixbar({
-                bar1: true
-                , css: {right: 50, top: 90}
-                , bgcolor: '#009688'
-                , click: function (type) {
-                    if (type === 'bar1') {
-                        layer.alert("静下心来发帖吧~")
-                    }
-                }
-            });
         });
     </script>
 </div>

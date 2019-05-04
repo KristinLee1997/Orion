@@ -1,13 +1,15 @@
 package com.aries.orion.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.aries.hermes.client.thrift.vo.ReplyVO;
-import com.aries.orion.service.DiscussService;
 import com.aries.orion.model.vo.DisscussVo;
+import com.aries.orion.service.DiscussService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -23,7 +25,7 @@ public class DiscussController {
 
     @GetMapping("/list")
     public ModelAndView discuss() {
-        List<DisscussVo> discussList = discussService.getDiscussList(1, 20);
+        List<DisscussVo> discussList = discussService.getDiscussList(1, 50);
         ModelAndView modelAndView = new ModelAndView("discuss");
         modelAndView.addObject("disscussvolist", discussList);
         return modelAndView;
@@ -37,5 +39,19 @@ public class DiscussController {
         modelAndView.addObject("discussvo", disscussVo);
         modelAndView.addObject("discussdetail", discussDetail);
         return modelAndView;
+    }
+
+    @PostMapping("/add/topic")
+    @ResponseBody
+    public String addTopic(@RequestBody DisscussVo disscussVo) {
+        Boolean res = discussService.addTopic(disscussVo);
+        return "{\"resp\":true}";
+    }
+
+    @PostMapping("/add/reply")
+    @ResponseBody
+    public String addReply(@RequestBody ReplyVO replyVO) {
+        Boolean res = discussService.addReply(replyVO);
+        return "{\"resp\":true}";
     }
 }
