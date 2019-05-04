@@ -28,49 +28,55 @@
     <div class="layui-form-item">
         <label class="layui-form-label" style="width:100px">类型</label>
         <div class="layui-input-block" id="IsPurchased">
-            <input type="radio" name="t" value="选择" title="选择" lay-filter="aaa"/>
-            <input type="radio" name="t" value="填空" title="填空" lay-filter="aaa"/>
+            <input type="radio" name="type" value="0" title="选择" lay-filter="aaa"/>
+            <input type="radio" name="type" value="1" title="填空" lay-filter="aaa"/>
         </div>
     </div>
 
     <div class="layui-form-item count">
         <label class="layui-form-label">选择题选项</label>
-        <div class="layui-input-inline">
-            <input type="text" id="ProbationAccount" required="required" placeholder="请输入选择题选项内容" autocomplete="off"
-                   class="layui-input"/>
+        <div class="layui-input-block">
+            <div class="layui-input-inline">
+                <input type="text" name="selection" id="ProbationAccount" required="required" placeholder="请输入选择题选项内容"
+                       autocomplete="off"
+                       class="layui-input"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux"></div>
         </div>
-        <div class="layui-form-mid layui-word-aux"></div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">题目分类</label>
         <div class="layui-input-block">
-            <select name="question_category" lay-filter="question_category">
+            <select name="categoryId" lay-filter="question_category">
                 <option value="" selected=""></option>
                 <option value="0">数据库</option>
                 <option value="1">算法</option>
-                <option value="1">框架</option>
-                <option value="1">操作系统</option>
+                <option value="2">框架</option>
+                <option value="3">操作系统</option>
             </select>
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">难度</label>
-        <div id="test5"></div>
+        <div class="layui-input-block">
+            <div id="test5"></div>
+            <input id="number" type="text" name="difficulty" value="" class="difficulty" style="display:none"/>
+        </div>
     </div>
 
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">题目描述</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+            <textarea name="description" placeholder="请输入内容" class="layui-textarea"></textarea>
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">答案</label>
         <div class="layui-input-block">
-            <input type="text" name="title" autocomplete="off" placeholder="请输入答案" class="layui-input">
+            <input type="text" name="answer" autocomplete="off" placeholder="请输入答案" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -88,12 +94,13 @@
         var element = layui.element;
 
     });
-    layui.use(['form', 'layedit', 'laydate', 'rate'], function () {
+    layui.use(['form', 'layedit', 'laydate', 'rate', 'jquery'], function () {
         var form = layui.form
             , layer = layui.layer
-            , layedit = layui.layedit
+            // , layedit = layui.layedit
             , laydate = layui.laydate;
-        var rate = layui.rate;
+        var rate = layui.rate,
+            $ = layui.jquery;
         //自定义文本
         rate.render({
             elem: '#test5'
@@ -108,6 +115,7 @@
                     , '5': '特难'
                 };
                 this.span.text(arrs[value] || (value + "星"));
+                $("#number").val(value);
             }
         });
         //日期
@@ -117,6 +125,12 @@
         laydate.render({
             elem: '#date1'
         });
+        // rate.render({
+        //     elem: '#test5'
+        //     ,choose: function(value){
+        //         if(value > 3) alert( '么么哒' )
+        //     }
+        // });
 
 
         //自定义验证规则
@@ -140,6 +154,22 @@
             layer.alert(JSON.stringify(data.field), {
                 title: '最终的提交信息'
             });
+            $.ajax({
+                url: "/questions/upload",
+                data: JSON.stringify(data.field),
+                type: "post",
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    if (data.success) {
+                        window.location = "index";
+                    } else {
+                        layer.msg(data.msg);
+                    }
+                    alert('请求成功');
+                    console.log(data);
+                }
+            });
             return false;
         });
 
@@ -151,7 +181,7 @@
 
         form.on('radio(aaa)', function (data) {
 
-            if ($('#IsPurchased input[name="t"]:checked ').val() == "填空") {
+            if ($('#IsPurchased input[name="type"]:checked ').val() == "1") {
                 $(".count").hide();
             } else {
                 $(".count").show();

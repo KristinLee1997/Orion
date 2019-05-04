@@ -1,4 +1,4 @@
-package com.aries.orion.biz.impl;
+package com.aries.orion.service.impl;
 
 import com.aries.hermes.client.thrift.exception.CallFailedException;
 import com.aries.hermes.client.thrift.exception.PageSizeLimitException;
@@ -6,7 +6,7 @@ import com.aries.hermes.client.thrift.facade.ReplyFacade;
 import com.aries.hermes.client.thrift.facade.TopicFacade;
 import com.aries.hermes.client.thrift.vo.ReplyVO;
 import com.aries.hermes.client.thrift.vo.TopicVO;
-import com.aries.orion.biz.DiscussBiz;
+import com.aries.orion.service.DiscussService;
 import com.aries.orion.model.vo.DisscussVo;
 import com.aries.user.gaea.client.model.GaeaResponse;
 import com.aries.user.gaea.client.model.User;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class DiscussBizImpl implements DiscussBiz {
+public class DiscussServiceImpl implements DiscussService {
     @Override
     public List<DisscussVo> getDiscussList(Integer page, Integer pageSize) {
         List<TopicVO> topicVOList = null;
