@@ -9,7 +9,7 @@
     <link rel="icon" href="/static/images/miao.jpeg" type="image/x-icon"/>
     <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="/static/X-admin/css/font.css">
-<!--    <link rel="stylesheet" href="/static/X-admin/css/xadmin.css">-->
+    <!--    <link rel="stylesheet" href="/static/X-admin/css/xadmin.css">-->
     <script src="/static/X-admin/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="/static/X-admin/js/xadmin.js"></script>
 </head>
@@ -35,7 +35,7 @@
         <legend>回复</legend>
     </fieldset>
     <div class="layui-card-header" align="right">
-        <button class="layui-btn layui-btn-lg" onclick="xadmin.open('回复主帖','/templates/reply-add.html',800,600)">
+        <button class="layui-btn layui-btn-lg" onclick="xadmin.open('回复主帖','/discuss/get/reply?id='+getTopicId(),800,600)">
             <i class="layui-icon">&#xe642;</i></button>
     </div>
     <div style="padding: 20px; background-color: #F2F2F2;">
@@ -59,6 +59,15 @@
 <script src="/static/layui/layui.js"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
+
+    function getTopicId() {
+        var arr = location.href.split('/');
+
+        topicId = arr[arr.length - 1];
+
+        return topicId;
+    }
+
     layui.use(['element', 'layer'], function () {
         var element = layui.element;
         var layer = layui.layer;

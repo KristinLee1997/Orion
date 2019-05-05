@@ -54,4 +54,9 @@ public class DiscussController {
         Boolean res = discussService.addReply(replyVO);
         return "{\"resp\":true}";
     }
+
+    @GetMapping("/get/reply")
+    public String getReplyTempalte() {
+        return "reply-add";
+    }
 }
