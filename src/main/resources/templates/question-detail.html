@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="link::head_link"></head>
+
+<body class="layui-layout-body">
+<div th:include="toubu::toubu_header"></div>
+
+<div th:each="que:${question}">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+        <legend>题目</legend>
+    </fieldset>
+    <blockquote class="layui-elem-quote" th:text="${que.title}"></blockquote>
+
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+        <legend>答题区</legend>
+    </fieldset>
+    <form class="layui-form layui-form-pane" action="">
+        <div class="layui-form-item" th:if="${que.type} eq '0'">
+            <label class="layui-form-label" style="width:100px">选项</label>
+            <div class="layui-input-block" id="IsPurchased">
+                <input type="radio" name="answer" value="1" title="红黑树" lay-filter="aaa"/>
+                <input type="radio" name="answer" value="2" title="二叉树" lay-filter="aaa"/>
+            </div>
+        </div>
+        <div class="layui-form-item" th:if="${que.type} eq '1'">
+            <label class="layui-form-label">答案</label>
+            <div class="layui-input-block">
+                <input type="text" name="answer" autocomplete="off" placeholder="请输入答案" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <div class="layui-input-block">
+                <input id="gaeaId" type="text" name="gaeaId" value="6" class="gaeaId" style="display:none"/>
+                <input id="id" type="text" name="id" value="1" class="id" style="display:none"/>
+                <input id="type" type="text" name="type" th:value="${que.type}" class="type" style="display:none"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <button class="layui-btn" lay-submit="" lay-filter="demo2">提交题目</button>
+        </div>
+    </form>
+</div>
+
+
+<script src="/static/layui/layui.js" charset="utf-8"></script>
+<script src="/static/jquery/jquery.min.js"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+    layui.use(['form', 'layedit', 'laydate', 'rate', 'jquery'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            // , layedit = layui.layedit
+            , laydate = layui.laydate;
+
+        //监听提交
+        form.on('submit(demo2)', function (data) {
+            // layer.alert(JSON.stringify(data.field), {
+            //     title: '最终的提交信息'
+            // });
+            $.ajax({
+                url: "/questions/exercise",
+                data: JSON.stringify(data.field),
+                type: "post",
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    if (data == 'SUCCESS') {
+                        layer.alert("Successful!");
+                        console.log("Successful!");
+                        window.history.back(-1);
+                    } else {
+                        layer.alert("Wrong Answer!");
+                        console.log("Wrong Answer!");
+                    }
+                },
+                error: function (e, m) {
+                    console.log(e);
+                    console.log(m);
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

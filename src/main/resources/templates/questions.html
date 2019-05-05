@@ -35,8 +35,9 @@
                     <th>通过人数</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr th:each="questionvo:${questionvolist}">
+
+                <tbody th:each="questionvo:${questionvolist}">
+                <tr th:onclick="'location.href = \'' + @{/questions/detail/{id}(id=${questionvo.id})} + '\''">
                     <td th:text="${questionvo.id}"></td>
                     <td th:text="${questionvo.title}"></td>
                     <td th:text="${questionvo.categoryName}"></td>

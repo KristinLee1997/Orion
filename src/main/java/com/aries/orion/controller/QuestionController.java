@@ -1,14 +1,16 @@
 package com.aries.orion.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.aries.orion.model.HttpResponse;
+import com.aries.orion.model.SystemStatus;
 import com.aries.orion.model.po.Category;
 import com.aries.orion.model.po.Question;
 import com.aries.orion.model.vo.QuestionVO;
 import com.aries.orion.service.QuestionService;
-import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,11 +56,21 @@ public class QuestionController {
         return modelAndView;
     }
 
-    @GetMapping("/aa")
+    @GetMapping("/detail/{id}")
+    public ModelAndView questiondetail(@PathVariable("id") Long id) {
+        Question question = questionService.selectQuestionByPrimary(id);
+        ModelAndView modelAndView = new ModelAndView("question-detail");
+        modelAndView.addObject("question", question);
+        return modelAndView;
+    }
+
+    @PostMapping("/exercise")
     @ResponseBody
-    public void selectAll() {
-        PageHelper.startPage(2, 2);
-//        List<Question> questionList = questionMapper.selectByExample(new QuestionExample());
-//        System.out.println(JSON.toJSONString(questionList));
+    public String doExercise(@RequestBody Question question) {
+        if (question.getId() == null || question.getType() == null) {
+            return HttpResponse.of(SystemStatus.PARAM_NULL);
+        }
+        String response = questionService.doExercise(question);
+        return response;
     }
 }
