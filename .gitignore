@@ -35,4 +35,5 @@ mvnw
 mvnw.cmd
 
 **/application.properties
+**/redis.properties
 **/.DS_Store

@@ -1,4 +1,4 @@
-package com.aries.orion.model;
+package com.aries.orion.constants;
 
 
 public enum SystemStatus {

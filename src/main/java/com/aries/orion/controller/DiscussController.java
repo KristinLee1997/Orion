@@ -1,6 +1,8 @@
 package com.aries.orion.controller;
 
 import com.aries.hermes.client.thrift.vo.ReplyVO;
+import com.aries.orion.constants.SystemStatus;
+import com.aries.orion.model.HttpResponse;
 import com.aries.orion.model.vo.DisscussVo;
 import com.aries.orion.service.DiscussService;
 import org.springframework.stereotype.Controller;
@@ -41,22 +43,22 @@ public class DiscussController {
         return modelAndView;
     }
 
+    @GetMapping("/get/reply")
+    public String getReplyTempalte() {
+        return "reply-add";
+    }
+
     @PostMapping("/add/topic")
     @ResponseBody
     public String addTopic(@RequestBody DisscussVo disscussVo) {
         Boolean res = discussService.addTopic(disscussVo);
-        return "{\"resp\":true}";
+        return HttpResponse.of(SystemStatus.SUCCESS);
     }
 
     @PostMapping("/add/reply")
     @ResponseBody
     public String addReply(@RequestBody ReplyVO replyVO) {
         Boolean res = discussService.addReply(replyVO);
-        return "{\"resp\":true}";
-    }
-
-    @GetMapping("/get/reply")
-    public String getReplyTempalte() {
-        return "reply-add";
+        return HttpResponse.of(SystemStatus.SUCCESS);
     }
 }

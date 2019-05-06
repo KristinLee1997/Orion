@@ -26,35 +26,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>贤心</td>
-                    <td>3100</td>
-                    <td>720</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>张爱玲</td>
-                    <td>2900</td>
-                    <td>735</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Helen Keller</td>
-                    <td>2787</td>
-                    <td>640</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>岳飞</td>
-                    <td>1500</td>
-                    <td>320</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>孟子</td>
-                    <td>1300</td>
-                    <td>470</td>
+                <tr th:each="rank:${ranklist}">
+                    <td th:text="${rankStat.index+1}"></td>
+                    <td th:text="${rank.userName}"></td>
+                    <td th:text="${rank.acTotal}"></td>
+                    <td th:text="${rank.registerDays}"></td>
                 </tr>
                 </tbody>
             </table>

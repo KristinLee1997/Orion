@@ -1,6 +1,7 @@
 package com.aries.orion.model;
 
 import com.alibaba.fastjson.JSON;
+import com.aries.orion.constants.SystemStatus;
 
 public class HttpResponse {
     private Integer code;

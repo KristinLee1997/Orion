@@ -1,27 +1,41 @@
 package com.aries.orion.service.impl;
 
+import com.aries.orion.constants.SystemConstants;
+import com.aries.orion.constants.SystemStatus;
 import com.aries.orion.enums.QuestionDifficultyEnum;
 import com.aries.orion.enums.QuestionTypeEnum;
 import com.aries.orion.mapper.AcQuestionMapper;
 import com.aries.orion.mapper.CategoryMapper;
 import com.aries.orion.mapper.QuestionMapper;
 import com.aries.orion.model.HttpResponse;
-import com.aries.orion.model.SystemStatus;
 import com.aries.orion.model.po.AcQuestion;
 import com.aries.orion.model.po.AcQuestionExample;
 import com.aries.orion.model.po.Category;
 import com.aries.orion.model.po.Question;
 import com.aries.orion.model.po.QuestionExample;
 import com.aries.orion.model.vo.QuestionVO;
+import com.aries.orion.model.vo.UserRankVO;
 import com.aries.orion.service.QuestionService;
+import com.aries.orion.utils.DateUtils;
+import com.aries.user.gaea.client.utils.UserUtils;
+import com.aries.user.gaea.contact.model.UserInfo;
 import com.github.pagehelper.PageHelper;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -33,6 +47,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Resource
     private AcQuestionMapper acQuestionMapper;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Override
     public int upload(Question question) {
@@ -104,6 +121,8 @@ public class QuestionServiceImpl implements QuestionService {
                 setQuestionId(question.getId());
             }};
             acQuestionMapper.insertSelective(acQuestion);
+
+            redisTemplate.opsForZSet().incrementScore(SystemConstants.REDIS_RANKING_NAME, acQuestion.getGaeaId(), 1);
         }
         return HttpResponse.of(SystemStatus.SUCCESS);
     }
@@ -117,5 +136,30 @@ public class QuestionServiceImpl implements QuestionService {
             return null;
         }
         return acQuestionList.get(0);
+    }
+
+    @Override
+    public List<UserRankVO> getRanking() {
+        List<UserRankVO> userRankVOList = new ArrayList<>();
+        Set<ZSetOperations.TypedTuple<Object>> rangeByScoreWithScores = redisTemplate.opsForZSet().reverseRangeWithScores(SystemConstants.REDIS_RANKING_NAME, 0, -1);
+        Iterator<ZSetOperations.TypedTuple<Object>> iterator = rangeByScoreWithScores.iterator();
+        while (iterator.hasNext()) {
+            UserRankVO userRankVO = new UserRankVO();
+            ZSetOperations.TypedTuple<Object> next = iterator.next();
+            userRankVO.setGaeaId(((Integer)next.getValue()).longValue());
+            userRankVO.setAcTotal(Objects.requireNonNull(next.getScore()).longValue());
+            System.out.println("value:" + next.getValue() + " score:" + next.getScore());
+            userRankVOList.add(userRankVO);
+        }
+
+        List<Long> userIdList = userRankVOList.stream().map(UserRankVO::getGaeaId).collect(Collectors.toList());
+        Map<Long, UserInfo> userInfoMap = (Map) UserUtils.getUserInfoByIdList(userIdList).getData();
+        for (UserRankVO userRankVO : userRankVOList) {
+            userRankVO.setUserName(userInfoMap.get(userRankVO.getGaeaId()).getNickname());
+            userRankVO.setRegisterDays(DateUtils.getDay(
+                    DateUtils.convertString2Date(userInfoMap.get(userRankVO.getGaeaId()).getAddTime())
+                    , new Date()));
+        }
+        return userRankVOList;
     }
 }

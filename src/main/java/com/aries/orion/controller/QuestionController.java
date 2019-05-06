@@ -1,11 +1,12 @@
 package com.aries.orion.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.aries.orion.constants.SystemStatus;
 import com.aries.orion.model.HttpResponse;
-import com.aries.orion.model.SystemStatus;
 import com.aries.orion.model.po.Category;
 import com.aries.orion.model.po.Question;
 import com.aries.orion.model.vo.QuestionVO;
+import com.aries.orion.model.vo.UserRankVO;
 import com.aries.orion.service.QuestionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -36,9 +37,13 @@ public class QuestionController {
     }
 
     @GetMapping("/ranking")
-    public String ranking() {
-        return "ranking";
+    public ModelAndView ranking() {
+        List<UserRankVO> userRankVOList = questionService.getRanking();
+        ModelAndView modelAndView = new ModelAndView("ranking");
+        modelAndView.addObject("ranklist", userRankVOList);
+        return modelAndView;
     }
+
 
     @PostMapping("/upload")
     public String upload(@RequestBody Question question) {
