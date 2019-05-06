@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aries.orion.mapper.CourseMapper" >
+  <resultMap id="BaseResultMap" type="com.aries.orion.model.po.Course" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+    <result column="teacher_desc" property="teacherDesc" jdbcType="VARCHAR" />
+    <result column="course_desc" property="courseDesc" jdbcType="VARCHAR" />
+    <result column="course_name" property="courseName" jdbcType="VARCHAR" />
+    <result column="course_introduce" property="courseIntroduce" jdbcType="VARCHAR" />
+    <result column="bright_spot" property="brightSpot" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.aries.orion.model.po.Course" extends="BaseResultMap" >
+    <result column="image" property="image" jdbcType="LONGVARBINARY" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, teacher_name, teacher_desc, course_desc, course_name, course_introduce, bright_spot
+  </sql>
+  <sql id="Blob_Column_List" >
+    image
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.aries.orion.model.po.CourseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.aries.orion.model.po.CourseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from course
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from course
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.aries.orion.model.po.CourseExample" >
+    delete from course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.aries.orion.model.po.Course" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into course (teacher_name, teacher_desc, course_desc, 
+      course_name, course_introduce, bright_spot, 
+      image)
+    values (#{teacherName,jdbcType=VARCHAR}, #{teacherDesc,jdbcType=VARCHAR}, #{courseDesc,jdbcType=VARCHAR}, 
+      #{courseName,jdbcType=VARCHAR}, #{courseIntroduce,jdbcType=VARCHAR}, #{brightSpot,jdbcType=VARCHAR}, 
+      #{image,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aries.orion.model.po.Course" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into course
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="teacherName != null" >
+        teacher_name,
+      </if>
+      <if test="teacherDesc != null" >
+        teacher_desc,
+      </if>
+      <if test="courseDesc != null" >
+        course_desc,
+      </if>
+      <if test="courseName != null" >
+        course_name,
+      </if>
+      <if test="courseIntroduce != null" >
+        course_introduce,
+      </if>
+      <if test="brightSpot != null" >
+        bright_spot,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="teacherName != null" >
+        #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherDesc != null" >
+        #{teacherDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="courseDesc != null" >
+        #{courseDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="courseName != null" >
+        #{courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="courseIntroduce != null" >
+        #{courseIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="brightSpot != null" >
+        #{brightSpot,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.aries.orion.model.po.CourseExample" resultType="java.lang.Integer" >
+    select count(*) from course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update course
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.teacherName != null" >
+        teacher_name = #{record.teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherDesc != null" >
+        teacher_desc = #{record.teacherDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseDesc != null" >
+        course_desc = #{record.courseDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseName != null" >
+        course_name = #{record.courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseIntroduce != null" >
+        course_introduce = #{record.courseIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brightSpot != null" >
+        bright_spot = #{record.brightSpot,jdbcType=VARCHAR},
+      </if>
+      <if test="record.image != null" >
+        image = #{record.image,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update course
+    set id = #{record.id,jdbcType=BIGINT},
+      teacher_name = #{record.teacherName,jdbcType=VARCHAR},
+      teacher_desc = #{record.teacherDesc,jdbcType=VARCHAR},
+      course_desc = #{record.courseDesc,jdbcType=VARCHAR},
+      course_name = #{record.courseName,jdbcType=VARCHAR},
+      course_introduce = #{record.courseIntroduce,jdbcType=VARCHAR},
+      bright_spot = #{record.brightSpot,jdbcType=VARCHAR},
+      image = #{record.image,jdbcType=LONGVARBINARY}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update course
+    set id = #{record.id,jdbcType=BIGINT},
+      teacher_name = #{record.teacherName,jdbcType=VARCHAR},
+      teacher_desc = #{record.teacherDesc,jdbcType=VARCHAR},
+      course_desc = #{record.courseDesc,jdbcType=VARCHAR},
+      course_name = #{record.courseName,jdbcType=VARCHAR},
+      course_introduce = #{record.courseIntroduce,jdbcType=VARCHAR},
+      bright_spot = #{record.brightSpot,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aries.orion.model.po.Course" >
+    update course
+    <set >
+      <if test="teacherName != null" >
+        teacher_name = #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherDesc != null" >
+        teacher_desc = #{teacherDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="courseDesc != null" >
+        course_desc = #{courseDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="courseName != null" >
+        course_name = #{courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="courseIntroduce != null" >
+        course_introduce = #{courseIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="brightSpot != null" >
+        bright_spot = #{brightSpot,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.aries.orion.model.po.Course" >
+    update course
+    set teacher_name = #{teacherName,jdbcType=VARCHAR},
+      teacher_desc = #{teacherDesc,jdbcType=VARCHAR},
+      course_desc = #{courseDesc,jdbcType=VARCHAR},
+      course_name = #{courseName,jdbcType=VARCHAR},
+      course_introduce = #{courseIntroduce,jdbcType=VARCHAR},
+      bright_spot = #{brightSpot,jdbcType=VARCHAR},
+      image = #{image,jdbcType=LONGVARBINARY}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aries.orion.model.po.Course" >
+    update course
+    set teacher_name = #{teacherName,jdbcType=VARCHAR},
+      teacher_desc = #{teacherDesc,jdbcType=VARCHAR},
+      course_desc = #{courseDesc,jdbcType=VARCHAR},
+      course_name = #{courseName,jdbcType=VARCHAR},
+      course_introduce = #{courseIntroduce,jdbcType=VARCHAR},
+      bright_spot = #{brightSpot,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

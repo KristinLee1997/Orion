@@ -7,19 +7,19 @@
 
 <div class="layui-row">
     <div class="layui-field-box">
-        <div class="layui-col-md2"><img class="krisimage" src="/static/images/study1.jpg"/></div>
+        <div class="layui-col-md2"><img class="krisimage" src="file:/Users/lihang/Pictures/play1.png" alt=""/></div>
         <div class="layui-col-md10">
-            <div class="layui-row" style="font-size:22px">题目</div>
+            <div class="layui-row" style="font-size:22px" th:text="${course.courseName}"></div>
             <br/>
             <div class="layui-row">
                 <span style="font-weight:bold;">主讲人简介:&nbsp;</span>
-                <span></span>
-                <span></span>
+                <span th:text="${course.teacherName}"></span>
+                <span th:text="${course.teacherDesc}"></span>
             </div>
             <br/>
             <div class="layui-row">
                 <span style="font-weight:bold;">课程简述:&nbsp;</span>
-                <span></span></div>
+                <span th:text="${course.courseDesc}"></span></div>
         </div>
     </div>
 </div>
@@ -31,8 +31,14 @@
         <li>课程目录</li>
     </ul>
     <div class="layui-tab-content" style="height: 100px;">
-        <div class="layui-tab-item layui-show">内容不一样是要有，因为你可以监听tab事件（阅读下文档就是了）</div>
-        <div class="layui-tab-item">内容2</div>
+        <div class="layui-tab-item layui-show" th:text="${course.courseIntroduce}"></div>
+        <div class="layui-tab-item">
+            <div th:each="article:${articleList}">
+                <span th:text="${article.number}"></span>&nbsp;<span th:text="${article.title}"></span><br/>
+                <br/>
+            </div>
+
+        </div>
     </div>
 </div>
 </div>

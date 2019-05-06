@@ -3,11 +3,8 @@ package com.aries.orion.mapper;
 import com.aries.orion.model.po.Category;
 import com.aries.orion.model.po.CategoryExample;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-@Mapper
 public interface CategoryMapper {
     int countByExample(CategoryExample example);
 
