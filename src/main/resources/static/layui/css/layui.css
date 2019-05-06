@@ -5016,3 +5016,9 @@ body .layui-util-face .layui-layer-content {
     -webkit-animation-name: layui-fadeout;
     animation-name: layui-fadeout
 }
+
+.krisimage{
+    width:130px;
+    height:170px;
+    border-radius:8px;
+}
