@@ -32,7 +32,7 @@
                 <a th:href="@{/discuss/{topicid}(topicid=${discuss.id})}">
                     <fieldset class="layui-elem-field" style="margin-right: 100px">
                         <legend>
-                            <img src="/static/images/miao.jpeg" style="width:50px; height:50px; border-radius:50%;">
+                            <img th:src="@{http://114.115.132.189:8080/phoenix/getPhotoById/{id}(id=${discuss.imageId})}" style="width:50px; height:50px; border-radius:50%;">
                             <span th:text="${discuss.username}"></span>
                         </legend>
                         <div class="layui-row">

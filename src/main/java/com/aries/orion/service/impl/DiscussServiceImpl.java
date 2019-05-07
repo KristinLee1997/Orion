@@ -49,6 +49,7 @@ public class DiscussServiceImpl implements DiscussService {
             disscussVo.setTheme(topicVO.getTheme());
             disscussVo.setInsertTime(topicVO.getInsertTime());
             disscussVo.setGaeaid(topicVO.getGaeaId());
+            disscussVo.setImageId(userInfo.get(topicVO.getGaeaId()).getImageId());
             disscussVo.setUsername(userInfo.get(topicVO.getGaeaId()).getNickname());
             disscussVo.setReplyNum(280);
             disscussVoList.add(disscussVo);

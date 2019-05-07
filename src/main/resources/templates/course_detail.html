@@ -7,7 +7,7 @@
 
 <div class="layui-row">
     <div class="layui-field-box">
-        <div class="layui-col-md2"><img class="krisimage" th:src="@{/picture/course/{id}(id=${course.id})}" alt=""/></div>
+        <div class="layui-col-md2"><img class="krisimage" th:src="@{http://114.115.132.189:8080/phoenix/getPhotoById/{id}(id=${course.imageId})}" alt=""/></div>
         <div class="layui-col-md10">
             <div class="layui-row" style="font-size:22px" th:text="${course.courseName}"></div>
             <br/>

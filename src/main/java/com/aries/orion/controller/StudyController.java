@@ -12,12 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -34,25 +31,6 @@ public class StudyController {
             return HttpResponse.of(SystemStatus.DATABASE_ERROR);
         }
         return HttpResponse.of(SystemStatus.SUCCESS);
-    }
-
-    @PostMapping("/update/course")
-    @ResponseBody
-    public String updateCourse(MultipartFile file, Long id) {
-        int i = studyService.updateCourse(file, id);
-        if (i <= 0) {
-            return HttpResponse.of(SystemStatus.DATABASE_ERROR);
-        }
-        return HttpResponse.of(SystemStatus.SUCCESS);
-    }
-
-    @GetMapping("/getImage/{id}")
-    public void getImage(@PathVariable("id") Long id, HttpServletResponse response) {
-        if (id == null || id <= 0) {
-            log.warn("获取课程图片参数为null");
-            return;
-        }
-        studyService.getImage(id, response);
     }
 
     @GetMapping("/list")

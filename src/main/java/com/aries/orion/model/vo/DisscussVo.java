@@ -4,7 +4,7 @@ public class DisscussVo {
     private Long id;
     private Long gaeaid;
     private String username;
-    private String image;
+    private Long  imageId;
     private String theme;
     private String content;
     private Boolean anonymousSend;
@@ -38,12 +38,12 @@ public class DisscussVo {
         this.username = username;
     }
 
-    public String getImage() {
-        return image;
+    public Long getImageId() {
+        return imageId;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageId(Long imageId) {
+        this.imageId = imageId;
     }
 
     public String getTheme() {
@@ -114,7 +114,7 @@ public class DisscussVo {
         private Long id;
         private Long gaeaid;
         private String username;
-        private String image;
+        private Long imageId;
         private String theme;
         private String title;
         private Boolean anonymousSend;
@@ -146,8 +146,8 @@ public class DisscussVo {
             return this;
         }
 
-        public DisscussVoBuilder image(String image) {
-            this.image = image;
+        public DisscussVoBuilder imageId(Long imageId) {
+            this.imageId = imageId;
             return this;
         }
 
@@ -196,7 +196,7 @@ public class DisscussVo {
             disscussVo.setId(id);
             disscussVo.setGaeaid(gaeaid);
             disscussVo.setUsername(username);
-            disscussVo.setImage(image);
+            disscussVo.setImageId(imageId);
             disscussVo.setTheme(theme);
             disscussVo.setContent(title);
             disscussVo.setAnonymousSend(anonymousSend);
