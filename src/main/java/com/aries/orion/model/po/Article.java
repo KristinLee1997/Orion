@@ -7,9 +7,9 @@ public class Article {
 
     private Long courseId;
 
-    private String title;
-
     private BigDecimal number;
+
+    private String title;
 
     private String content;
 
@@ -29,20 +29,20 @@ public class Article {
         this.courseId = courseId;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
-    }
-
     public BigDecimal getNumber() {
         return number;
     }
 
     public void setNumber(BigDecimal number) {
         this.number = number;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
     }
 
     public String getContent() {

@@ -583,6 +583,66 @@ public class CourseExample {
             addCriterion("bright_spot not between", value1, value2, "brightSpot");
             return (Criteria) this;
         }
+
+        public Criteria andImageIdIsNull() {
+            addCriterion("image_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageIdIsNotNull() {
+            addCriterion("image_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageIdEqualTo(Long value) {
+            addCriterion("image_id =", value, "imageId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageIdNotEqualTo(Long value) {
+            addCriterion("image_id <>", value, "imageId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageIdGreaterThan(Long value) {
+            addCriterion("image_id >", value, "imageId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("image_id >=", value, "imageId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageIdLessThan(Long value) {
+            addCriterion("image_id <", value, "imageId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageIdLessThanOrEqualTo(Long value) {
+            addCriterion("image_id <=", value, "imageId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageIdIn(List<Long> values) {
+            addCriterion("image_id in", values, "imageId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageIdNotIn(List<Long> values) {
+            addCriterion("image_id not in", values, "imageId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageIdBetween(Long value1, Long value2) {
+            addCriterion("image_id between", value1, value2, "imageId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImageIdNotBetween(Long value1, Long value2) {
+            addCriterion("image_id not between", value1, value2, "imageId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

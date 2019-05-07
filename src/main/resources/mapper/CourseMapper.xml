@@ -9,9 +9,7 @@
     <result column="course_name" property="courseName" jdbcType="VARCHAR" />
     <result column="course_introduce" property="courseIntroduce" jdbcType="VARCHAR" />
     <result column="bright_spot" property="brightSpot" jdbcType="VARCHAR" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.aries.orion.model.po.Course" extends="BaseResultMap" >
-    <result column="image" property="image" jdbcType="LONGVARBINARY" />
+    <result column="image_id" property="imageId" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -72,28 +70,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, teacher_name, teacher_desc, course_desc, course_name, course_introduce, bright_spot
+    id, teacher_name, teacher_desc, course_desc, course_name, course_introduce, bright_spot, 
+    image_id
   </sql>
-  <sql id="Blob_Column_List" >
-    image
-  </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.aries.orion.model.po.CourseExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    'true' as QUERYID,
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from course
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.aries.orion.model.po.CourseExample" >
     select
     <if test="distinct" >
@@ -109,11 +88,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from course
     where id = #{id,jdbcType=BIGINT}
   </select>
@@ -133,10 +110,10 @@
     </selectKey>
     insert into course (teacher_name, teacher_desc, course_desc, 
       course_name, course_introduce, bright_spot, 
-      image)
+      image_id)
     values (#{teacherName,jdbcType=VARCHAR}, #{teacherDesc,jdbcType=VARCHAR}, #{courseDesc,jdbcType=VARCHAR}, 
       #{courseName,jdbcType=VARCHAR}, #{courseIntroduce,jdbcType=VARCHAR}, #{brightSpot,jdbcType=VARCHAR}, 
-      #{image,jdbcType=LONGVARBINARY})
+      #{imageId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.aries.orion.model.po.Course" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -162,8 +139,8 @@
       <if test="brightSpot != null" >
         bright_spot,
       </if>
-      <if test="image != null" >
-        image,
+      <if test="imageId != null" >
+        image_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -185,8 +162,8 @@
       <if test="brightSpot != null" >
         #{brightSpot,jdbcType=VARCHAR},
       </if>
-      <if test="image != null" >
-        #{image,jdbcType=LONGVARBINARY},
+      <if test="imageId != null" >
+        #{imageId,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -220,24 +197,10 @@
       <if test="record.brightSpot != null" >
         bright_spot = #{record.brightSpot,jdbcType=VARCHAR},
       </if>
-      <if test="record.image != null" >
-        image = #{record.image,jdbcType=LONGVARBINARY},
+      <if test="record.imageId != null" >
+        image_id = #{record.imageId,jdbcType=BIGINT},
       </if>
     </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update course
-    set id = #{record.id,jdbcType=BIGINT},
-      teacher_name = #{record.teacherName,jdbcType=VARCHAR},
-      teacher_desc = #{record.teacherDesc,jdbcType=VARCHAR},
-      course_desc = #{record.courseDesc,jdbcType=VARCHAR},
-      course_name = #{record.courseName,jdbcType=VARCHAR},
-      course_introduce = #{record.courseIntroduce,jdbcType=VARCHAR},
-      bright_spot = #{record.brightSpot,jdbcType=VARCHAR},
-      image = #{record.image,jdbcType=LONGVARBINARY}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -250,7 +213,8 @@
       course_desc = #{record.courseDesc,jdbcType=VARCHAR},
       course_name = #{record.courseName,jdbcType=VARCHAR},
       course_introduce = #{record.courseIntroduce,jdbcType=VARCHAR},
-      bright_spot = #{record.brightSpot,jdbcType=VARCHAR}
+      bright_spot = #{record.brightSpot,jdbcType=VARCHAR},
+      image_id = #{record.imageId,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -276,21 +240,10 @@
       <if test="brightSpot != null" >
         bright_spot = #{brightSpot,jdbcType=VARCHAR},
       </if>
-      <if test="image != null" >
-        image = #{image,jdbcType=LONGVARBINARY},
+      <if test="imageId != null" >
+        image_id = #{imageId,jdbcType=BIGINT},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.aries.orion.model.po.Course" >
-    update course
-    set teacher_name = #{teacherName,jdbcType=VARCHAR},
-      teacher_desc = #{teacherDesc,jdbcType=VARCHAR},
-      course_desc = #{courseDesc,jdbcType=VARCHAR},
-      course_name = #{courseName,jdbcType=VARCHAR},
-      course_introduce = #{courseIntroduce,jdbcType=VARCHAR},
-      bright_spot = #{brightSpot,jdbcType=VARCHAR},
-      image = #{image,jdbcType=LONGVARBINARY}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.aries.orion.model.po.Course" >
@@ -300,7 +253,8 @@
       course_desc = #{courseDesc,jdbcType=VARCHAR},
       course_name = #{courseName,jdbcType=VARCHAR},
       course_introduce = #{courseIntroduce,jdbcType=VARCHAR},
-      bright_spot = #{brightSpot,jdbcType=VARCHAR}
+      bright_spot = #{brightSpot,jdbcType=VARCHAR},
+      image_id = #{imageId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

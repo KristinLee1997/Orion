@@ -15,7 +15,7 @@ public class Course {
 
     private String brightSpot;
 
-    private byte[] image;
+    private Long imageId;
 
     public Long getId() {
         return id;
@@ -73,11 +73,11 @@ public class Course {
         this.brightSpot = brightSpot == null ? null : brightSpot.trim();
     }
 
-    public byte[] getImage() {
-        return image;
+    public Long getImageId() {
+        return imageId;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImageId(Long imageId) {
+        this.imageId = imageId;
     }
 }
