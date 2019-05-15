@@ -50,4 +50,12 @@ public class StudyController {
         modelAndView.addObject("articleList", articleList);
         return modelAndView;
     }
+
+    @GetMapping("/article/{id}")
+    public ModelAndView getArticle(@PathVariable("id") Long id) {
+        ModelAndView modelAndView = new ModelAndView("article");
+        Article article = studyService.getArticleById(id);
+        modelAndView.addObject("article", article);
+        return modelAndView;
+    }
 }

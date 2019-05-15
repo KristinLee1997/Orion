@@ -13,4 +13,6 @@ public interface StudyService {
     Course getCourseById(Long id);
 
     List<Article> getArticleListByCourseId(Long courseId);
+
+    Article getArticleById(Long id);
 }

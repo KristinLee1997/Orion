@@ -1,49 +1,5 @@
-<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:include="link::head_link"></head>
-
-<body class="layui-layout-body">
-<div th:include="toubu::toubu_header"></div>
-
-<div class="layui-row">
-    <div class="layui-field-box">
-        <div class="layui-col-md2"><img class="krisimage" src="/static/images/study1.jpg"/></div>
-        <div class="layui-col-md10">
-            <div class="layui-row" style="font-size:22px">题目</div>
-            <br/>
-            <div class="layui-row">
-                <span style="font-weight:bold;">主讲人简介:&nbsp;</span>
-                <span></span>
-                <span></span>
-            </div>
-            <br/>
-            <div class="layui-row">
-                <span style="font-weight:bold;">课程简述:&nbsp;</span>
-                <span></span></div>
-        </div>
-    </div>
-</div>
-
-
-<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
-    <ul class="layui-tab-title">
-        <li class="layui-this">课程介绍</li>
-        <li>课程目录</li>
-    </ul>
-    <div class="layui-tab-content" style="height: 100px;">
-        <div class="layui-tab-item layui-show">内容不一样是要有，因为你可以监听tab事件（阅读下文档就是了）</div>
-        <div class="layui-tab-item">内容2</div>
-    </div>
-</div>
-</div>
-<script src="/static/layui/layui.js"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
-<script>
-    layui.use('element', function () {
-        var $ = layui.jquery
-            , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
-    });
-</script>
-
-</body>
+<div th:text="${content}"></div>
 </html>
+
+

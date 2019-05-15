@@ -34,7 +34,7 @@
         <div class="layui-tab-item layui-show" th:text="${course.courseIntroduce}"></div>
         <div class="layui-tab-item">
             <div th:each="article:${articleList}">
-                <span th:text="${article.number}"></span>&nbsp;<span th:text="${article.title}"></span><br/>
+                <a th:href="@{/study/article/{id}(id=${article.id})}"><span th:text="${article.number}"></span>&nbsp;<span th:text="${article.title}"></span><br/></a>
                 <br/>
             </div>
 

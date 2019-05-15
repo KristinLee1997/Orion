@@ -55,4 +55,10 @@ public class StudyServiceImpl implements StudyService {
         List<Article> articleList = articleMapper.selectByExampleWithBLOBs(articleExample);
         return articleList;
     }
+
+    @Override
+    public Article getArticleById(Long id) {
+        Article article = articleMapper.selectByPrimaryKey(id);
+        return article;
+    }
 }
