@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,8 +32,20 @@ public class QuestionController {
     @GetMapping("/list")
     public ModelAndView list() {
         List<QuestionVO> questionList = questionService.getQuestionList(1, 20);
+        List<Category> categoryList = questionService.getCategoryList();
         ModelAndView modelAndView = new ModelAndView("questions");
         modelAndView.addObject("questionvolist", questionList);
+        modelAndView.addObject("categoryList", categoryList);
+        return modelAndView;
+    }
+
+    @GetMapping("/getQuestion")
+    public ModelAndView getQuestionByCategoryId(@RequestParam("categoryId") Integer categoryId) {
+        List<QuestionVO> questionList = questionService.getQuestionByCategoryId(categoryId);
+        List<Category> categoryList = questionService.getCategoryList();
+        ModelAndView modelAndView = new ModelAndView("questions");
+        modelAndView.addObject("questionvolist", questionList);
+        modelAndView.addObject("categoryList", categoryList);
         return modelAndView;
     }
 

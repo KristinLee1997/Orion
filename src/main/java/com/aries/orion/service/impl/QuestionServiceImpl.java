@@ -11,6 +11,7 @@ import com.aries.orion.model.HttpResponse;
 import com.aries.orion.model.po.AcQuestion;
 import com.aries.orion.model.po.AcQuestionExample;
 import com.aries.orion.model.po.Category;
+import com.aries.orion.model.po.CategoryExample;
 import com.aries.orion.model.po.Question;
 import com.aries.orion.model.po.QuestionExample;
 import com.aries.orion.model.vo.QuestionVO;
@@ -70,6 +71,18 @@ public class QuestionServiceImpl implements QuestionService {
         return questionVOList;
     }
 
+    @Override
+    public List<QuestionVO> getQuestionByCategoryId(Integer categoryId) {
+        QuestionExample example = new QuestionExample();
+        example.createCriteria().andCategoryIdEqualTo(categoryId);
+        List<Question> questionList = questionMapper.selectByExample(example);
+        List<QuestionVO> questionVOList = new ArrayList<>();
+        for (Question question : questionList) {
+            questionVOList.add(convert2QuestionVO(question));
+        }
+        return questionVOList;
+    }
+
     private QuestionVO convert2QuestionVO(Question question) {
         QuestionVO questionVo = new QuestionVO();
         questionVo.setId(question.getId());
@@ -106,6 +119,14 @@ public class QuestionServiceImpl implements QuestionService {
     public Question selectQuestionByPrimary(Long id) {
         Question question = questionMapper.selectByPrimaryKey(id);
         return question;
+    }
+
+    @Override
+    public List<Category> getCategoryList() {
+        CategoryExample example = new CategoryExample();
+        example.createCriteria();
+        List<Category> categoryList = categoryMapper.selectByExample(example);
+        return categoryList;
     }
 
     @Override
@@ -146,7 +167,7 @@ public class QuestionServiceImpl implements QuestionService {
         while (iterator.hasNext()) {
             UserRankVO userRankVO = new UserRankVO();
             ZSetOperations.TypedTuple<Object> next = iterator.next();
-            userRankVO.setGaeaId(((Integer)next.getValue()).longValue());
+            userRankVO.setGaeaId(((Integer) next.getValue()).longValue());
             userRankVO.setAcTotal(Objects.requireNonNull(next.getScore()).longValue());
             System.out.println("value:" + next.getValue() + " score:" + next.getScore());
             userRankVOList.add(userRankVO);
