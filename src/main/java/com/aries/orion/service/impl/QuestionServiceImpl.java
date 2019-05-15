@@ -163,6 +163,21 @@ public class QuestionServiceImpl implements QuestionService {
     public List<UserRankVO> getRanking() {
         List<UserRankVO> userRankVOList = new ArrayList<>();
         Set<ZSetOperations.TypedTuple<Object>> rangeByScoreWithScores = redisTemplate.opsForZSet().reverseRangeWithScores(SystemConstants.REDIS_RANKING_NAME, 0, -1);
+        if (rangeByScoreWithScores == null || rangeByScoreWithScores.size() <= 0) {
+            AcQuestionExample example = new AcQuestionExample();
+            example.createCriteria();
+            List<AcQuestion> acQuestionList = acQuestionMapper.selectByExample(example);
+            if (CollectionUtils.isEmpty(acQuestionList)) {
+                return new ArrayList<>();
+            }
+            for (AcQuestion acQuestion : acQuestionList) {
+                redisTemplate.opsForZSet().incrementScore(SystemConstants.REDIS_RANKING_NAME, acQuestion.getGaeaId(), 1);
+            }
+            rangeByScoreWithScores = redisTemplate.opsForZSet().reverseRangeWithScores(SystemConstants.REDIS_RANKING_NAME, 0, -1);
+        }
+        if (rangeByScoreWithScores == null || rangeByScoreWithScores.size() <= 0) {
+            return new ArrayList<>();
+        }
         Iterator<ZSetOperations.TypedTuple<Object>> iterator = rangeByScoreWithScores.iterator();
         while (iterator.hasNext()) {
             UserRankVO userRankVO = new UserRankVO();
@@ -172,7 +187,6 @@ public class QuestionServiceImpl implements QuestionService {
             System.out.println("value:" + next.getValue() + " score:" + next.getScore());
             userRankVOList.add(userRankVO);
         }
-
         List<Long> userIdList = userRankVOList.stream().map(UserRankVO::getGaeaId).collect(Collectors.toList());
         Map<Long, UserInfo> userInfoMap = (Map) UserUtils.getUserInfoByIdList(userIdList).getData();
         for (UserRankVO userRankVO : userRankVOList) {
