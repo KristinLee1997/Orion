@@ -10,6 +10,7 @@
     <result column="difficulty" property="difficulty" jdbcType="INTEGER" />
     <result column="selection" property="selection" jdbcType="VARCHAR" />
     <result column="answer" property="answer" jdbcType="VARCHAR" />
+    <result column="audit" property="audit" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, title, description, type, category_id, difficulty, selection, answer
+    id, title, description, type, category_id, difficulty, selection, answer, audit
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.aries.orion.model.po.QuestionExample" >
     select
@@ -109,10 +110,10 @@
     </selectKey>
     insert into question (title, description, type, 
       category_id, difficulty, selection, 
-      answer)
+      answer, audit)
     values (#{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
       #{categoryId,jdbcType=INTEGER}, #{difficulty,jdbcType=INTEGER}, #{selection,jdbcType=VARCHAR}, 
-      #{answer,jdbcType=VARCHAR})
+      #{answer,jdbcType=VARCHAR}, #{audit,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.aries.orion.model.po.Question" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -141,6 +142,9 @@
       <if test="answer != null" >
         answer,
       </if>
+      <if test="audit != null" >
+        audit,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="title != null" >
@@ -163,6 +167,9 @@
       </if>
       <if test="answer != null" >
         #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="audit != null" >
+        #{audit,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -199,6 +206,9 @@
       <if test="record.answer != null" >
         answer = #{record.answer,jdbcType=VARCHAR},
       </if>
+      <if test="record.audit != null" >
+        audit = #{record.audit,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -213,7 +223,8 @@
       category_id = #{record.categoryId,jdbcType=INTEGER},
       difficulty = #{record.difficulty,jdbcType=INTEGER},
       selection = #{record.selection,jdbcType=VARCHAR},
-      answer = #{record.answer,jdbcType=VARCHAR}
+      answer = #{record.answer,jdbcType=VARCHAR},
+      audit = #{record.audit,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -242,6 +253,9 @@
       <if test="answer != null" >
         answer = #{answer,jdbcType=VARCHAR},
       </if>
+      <if test="audit != null" >
+        audit = #{audit,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -253,7 +267,8 @@
       category_id = #{categoryId,jdbcType=INTEGER},
       difficulty = #{difficulty,jdbcType=INTEGER},
       selection = #{selection,jdbcType=VARCHAR},
-      answer = #{answer,jdbcType=VARCHAR}
+      answer = #{answer,jdbcType=VARCHAR},
+      audit = #{audit,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

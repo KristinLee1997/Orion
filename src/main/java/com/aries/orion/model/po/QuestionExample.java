@@ -623,6 +623,66 @@ public class QuestionExample {
             addCriterion("answer not between", value1, value2, "answer");
             return (Criteria) this;
         }
+
+        public Criteria andAuditIsNull() {
+            addCriterion("audit is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditIsNotNull() {
+            addCriterion("audit is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditEqualTo(Integer value) {
+            addCriterion("audit =", value, "audit");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditNotEqualTo(Integer value) {
+            addCriterion("audit <>", value, "audit");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditGreaterThan(Integer value) {
+            addCriterion("audit >", value, "audit");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditGreaterThanOrEqualTo(Integer value) {
+            addCriterion("audit >=", value, "audit");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditLessThan(Integer value) {
+            addCriterion("audit <", value, "audit");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditLessThanOrEqualTo(Integer value) {
+            addCriterion("audit <=", value, "audit");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditIn(List<Integer> values) {
+            addCriterion("audit in", values, "audit");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditNotIn(List<Integer> values) {
+            addCriterion("audit not in", values, "audit");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditBetween(Integer value1, Integer value2) {
+            addCriterion("audit between", value1, value2, "audit");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditNotBetween(Integer value1, Integer value2) {
+            addCriterion("audit not between", value1, value2, "audit");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -17,6 +17,8 @@ public class Question {
 
     private String answer;
 
+    private Integer audit;
+
     public Long getId() {
         return id;
     }
@@ -79,5 +81,13 @@ public class Question {
 
     public void setAnswer(String answer) {
         this.answer = answer == null ? null : answer.trim();
+    }
+
+    public Integer getAudit() {
+        return audit;
+    }
+
+    public void setAudit(Integer audit) {
+        this.audit = audit;
     }
 }

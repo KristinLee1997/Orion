@@ -62,6 +62,7 @@ public class QuestionServiceImpl implements QuestionService {
     public List<QuestionVO> getQuestionList(int page, int pageSize) {
         PageHelper.startPage(page, pageSize);
         QuestionExample example = new QuestionExample();
+        example.createCriteria().andAuditEqualTo(0);
         example.setOrderByClause("id asc");
         List<Question> questionList = questionMapper.selectByExample(example);
         List<QuestionVO> questionVOList = new ArrayList<>();
