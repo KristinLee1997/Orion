@@ -13,6 +13,8 @@ public interface QuestionService {
 
     List<QuestionVO> getQuestionList(int page, int pageSize);
 
+    Integer getQuestionCount();
+
     List<QuestionVO> getQuestionByCategoryId(Integer categoryId);
 
     List<Category> selectAllCategory();

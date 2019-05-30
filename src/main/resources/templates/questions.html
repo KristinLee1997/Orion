@@ -20,39 +20,38 @@
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
         <legend>题库</legend>
     </fieldset>
-<!--    <div class="layui-body">-->
-        <div style="margin-right: 100px;margin-left: 100px">
-            <table class="layui-table" lay-skin="line">
-                <colgroup>
-                    <col width="150">
-                    <col width="400">
-                    <col width="200">
-                    <col width="200">
-                    <!--                    <col>-->
-                </colgroup>
-                <thead>
-                <tr>
-                    <th>题号</th>
-                    <th>题目</th>
-                    <th>类别</th>
-                    <th>难度</th>
-                    <!--                    <th>通过人数</th>-->
-                </tr>
-                </thead>
+    <!--    <div class="layui-body">-->
+    <div style="margin-right: 100px;margin-left: 100px">
+        <table class="layui-table" lay-skin="line">
+            <colgroup>
+                <col width="150">
+                <col width="400">
+                <col width="200">
+                <col width="200">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>题号</th>
+                <th>题目</th>
+                <th>类别</th>
+                <th>难度</th>
+            </tr>
+            </thead>
 
-                <tbody th:each="questionvo:${questionvolist}">
-                <tr th:onclick="'location.href = \'' + @{/questions/detail/{id}(id=${questionvo.id})} + '\''">
-                    <td th:text="${questionvo.id}"></td>
-                    <td th:text="${questionvo.title}"></td>
-                    <td th:text="${questionvo.categoryName}"></td>
-                    <td th:text="${questionvo.difficulty}"></td>
-                    <!--                    <td th:text="${questionvo.passNum}"></td>-->
-                </tr>
-                </tbody>
-            </table>
-            <div id="demo11"></div>
+            <tbody th:each="questionvo:${questionvolist}">
+            <tr th:onclick="'location.href = \'' + @{/questions/detail/{id}(id=${questionvo.id})} + '\''">
+                <td th:text="${questionvo.id}"></td>
+                <td th:text="${questionvo.title}"></td>
+                <td th:text="${questionvo.categoryName}"></td>
+                <td th:text="${questionvo.difficulty}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="layui-row test">
+            <div id="demo3"></div>
         </div>
     </div>
+</div>
 <!--</div>-->
 
 <script src="/static/layui/layui.js" charset="utf-8"></script>
@@ -62,15 +61,53 @@
         var element = layui.element;
 
     });
-    layui.use(['laypage', 'layer'], function () {
+    layui.use(['laypage', 'layer', 'jquery'], function () {
         var laypage = layui.laypage
+            , $ = layui.$ //重点处
             , layer = layui.layer;
+        var count = 0;
+        $.get({
+            async: false,
+            url: "/questions/count",
+            success: function (resp) {
+                count = resp;
+                // console.log(count)
+                // console.log(resp)
+            },
+            error: function (err) {
+                console.log("wuwu")
+                console.log(err);
+            }
+        });
+
+        //获取url中的参数
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]);
+            return null; //返回参数值
+        }
+
         //自定义每页条数的选择项
         laypage.render({
-            elem: 'demo11'
-            , count: 1000
-            , limit: 100
-            , limits: [100, 300, 500]
+            elem: 'demo3'
+            , count: count
+            , first: '首页'
+            , last: '尾页'
+            , prev: '<em>←</em>'
+            , next: '<em>→</em>'
+            , limit: 10
+            , curr: getUrlParam("page")
+            , jump: function (obj, first) {
+                // window.location.href = '/questions/list?page=' + obj.curr + '&pageSize=' + obj.limit
+
+                //首次不执行
+                if (!first) {
+                    window.location.href = '/questions/list?page=' + obj.curr + '&pageSize=' + obj.limit
+                }
+                console.log('obj=' + obj.curr)
+                console.log('obj=' + obj.limit)
+            }
         });
     });
 </script>

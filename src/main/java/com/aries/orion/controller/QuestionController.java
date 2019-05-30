@@ -30,13 +30,24 @@ public class QuestionController {
     private QuestionService questionService;
 
     @GetMapping("/list")
-    public ModelAndView list() {
-        List<QuestionVO> questionList = questionService.getQuestionList(1, 20);
+    public ModelAndView list(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
+        List<QuestionVO> questionList = questionService.getQuestionList(page, pageSize);
         List<Category> categoryList = questionService.getCategoryList();
         ModelAndView modelAndView = new ModelAndView("questions");
         modelAndView.addObject("questionvolist", questionList);
         modelAndView.addObject("categoryList", categoryList);
         return modelAndView;
+    }
+
+    @GetMapping("/count")
+    @ResponseBody
+    public Integer count() {
+        Integer questionCount = questionService.getQuestionCount();
+        if (questionCount <= 0) {
+            log.warn("查询题目总数操作失败，返回异常count:{}", questionCount);
+            return 0;
+        }
+        return questionCount;
     }
 
     @GetMapping("/getQuestion")

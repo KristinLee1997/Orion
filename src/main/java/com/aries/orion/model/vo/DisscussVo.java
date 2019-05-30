@@ -4,7 +4,7 @@ public class DisscussVo {
     private Long id;
     private Long gaeaid;
     private String username;
-    private Long  imageId;
+    private Long imageId;
     private String theme;
     private String content;
     private Boolean anonymousSend;
@@ -12,7 +12,7 @@ public class DisscussVo {
     private Long categoryId;
     private String updateTime;
     private String insertTime;
-    private Integer replyNum;
+    private Long replyNum;
 
     public Long getId() {
         return id;
@@ -102,11 +102,11 @@ public class DisscussVo {
         this.insertTime = insertTime;
     }
 
-    public Integer getReplyNum() {
+    public Long getReplyNum() {
         return replyNum;
     }
 
-    public void setReplyNum(Integer replyNum) {
+    public void setReplyNum(Long replyNum) {
         this.replyNum = replyNum;
     }
 
@@ -122,7 +122,7 @@ public class DisscussVo {
         private Long categoryId;
         private String updateTime;
         private String insertTime;
-        private Integer replyNum;
+        private Long replyNum;
 
         private DisscussVoBuilder() {
         }
@@ -186,7 +186,7 @@ public class DisscussVo {
             return this;
         }
 
-        public DisscussVoBuilder replyNum(Integer replyNum) {
+        public DisscussVoBuilder replyNum(Long replyNum) {
             this.replyNum = replyNum;
             return this;
         }

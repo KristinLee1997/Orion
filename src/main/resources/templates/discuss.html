@@ -43,8 +43,8 @@
                                 <div class="layui-col-md8">&nbsp;</div>
                                 <div class="layui-col-md4">
                                     <div class="layui-row">
-                                        <div class="layui-col-md6"><span th:text="${discuss.insertTime}"></span></div>
-<!--                                        <div class="layui-col-md6">回复人数：<span th:text="${discuss.replyNum}"></span></div>-->
+                                        <div class="layui-col-md6"><span>时间：</span><span th:text="${discuss.insertTime}"></span></div>
+                                        <div class="layui-col-md6">回复人数：<span th:text="${discuss.replyNum}"></span></div>
                                     </div>
                                 </div>
                             </div>
@@ -60,6 +60,9 @@
                     <i class="layui-icon">&#xe642;</i></button>
             </div>
         </div>
+        <div class="layui-row test">
+            <div id="demo3"></div>
+        </div>
     </div>
 
     <script src="/static/layui/layui.js"></script>
@@ -68,6 +71,55 @@
         layui.use('element', function () {
             var element = layui.element;
 
+        });
+        layui.use(['laypage', 'layer', 'jquery'], function () {
+            var laypage = layui.laypage
+                , $ = layui.$ //重点处
+                , layer = layui.layer;
+            var count = 0;
+            $.get({
+                async: false,
+                url: "/discuss/count",
+                success: function (resp) {
+                    count = resp;
+                    console.log(count)
+                    console.log(resp)
+                },
+                error: function (err) {
+                    console.log("wuwu")
+                    console.log(err);
+                }
+            });
+
+            //获取url中的参数
+            function getUrlParam(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+                var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+                if (r != null) return unescape(r[2]);
+                return null; //返回参数值
+            }
+
+            //自定义每页条数的选择项
+            laypage.render({
+                elem: 'demo3'
+                , count: count
+                , first: '首页'
+                , last: '尾页'
+                , prev: '<em>←</em>'
+                , next: '<em>→</em>'
+                , limit: 10
+                , curr: getUrlParam("page")
+                , jump: function (obj, first) {
+                    // window.location.href = '/questions/list?page=' + obj.curr + '&pageSize=' + obj.limit
+
+                    //首次不执行
+                    if (!first) {
+                        window.location.href = '/discuss/list?page=' + obj.curr + '&pageSize=' + obj.limit
+                    }
+                    console.log('obj=' + obj.curr)
+                    console.log('obj=' + obj.limit)
+                }
+            });
         });
     </script>
 </div>

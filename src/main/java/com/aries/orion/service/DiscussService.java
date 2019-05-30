@@ -8,6 +8,10 @@ import java.util.List;
 public interface DiscussService {
     List<DisscussVo> getDiscussList(Integer page, Integer pageSize);
 
+    Long getDiscussCount();
+
+    Long getReplyCount(Long topicId);
+
     DisscussVo getDiscussById(Long topicId);
 
     List<ReplyVO> getDiscussDetail(Long topicId, Integer page, Integer pageSize);

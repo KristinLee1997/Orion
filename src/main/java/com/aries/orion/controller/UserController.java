@@ -48,12 +48,12 @@ public class UserController {
         }
     }
 
-    @GetMapping("/test")
+    @GetMapping("/loginto")
     public String test() {
         return "login";
     }
 
-    @GetMapping("/testreg")
+    @GetMapping("/reg")
     public String tesreg() {
         return "register";
     }

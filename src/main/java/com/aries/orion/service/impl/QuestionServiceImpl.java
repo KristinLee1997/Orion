@@ -62,7 +62,7 @@ public class QuestionServiceImpl implements QuestionService {
     public List<QuestionVO> getQuestionList(int page, int pageSize) {
         PageHelper.startPage(page, pageSize);
         QuestionExample example = new QuestionExample();
-        example.createCriteria().andAuditEqualTo(0);
+        example.createCriteria().andAuditEqualTo(1);
         example.setOrderByClause("id asc");
         List<Question> questionList = questionMapper.selectByExample(example);
         List<QuestionVO> questionVOList = new ArrayList<>();
@@ -70,6 +70,14 @@ public class QuestionServiceImpl implements QuestionService {
             questionVOList.add(convert2QuestionVO(question));
         }
         return questionVOList;
+    }
+
+    @Override
+    public Integer getQuestionCount() {
+        QuestionExample example = new QuestionExample();
+        example.createCriteria();
+        int count = questionMapper.countByExample(example);
+        return count;
     }
 
     @Override

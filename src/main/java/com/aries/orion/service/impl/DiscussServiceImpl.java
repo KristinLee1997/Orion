@@ -20,8 +20,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,7 +33,7 @@ public class DiscussServiceImpl implements DiscussService {
     public List<DisscussVo> getDiscussList(Integer page, Integer pageSize) {
         List<TopicVO> topicVOList = null;
         try {
-            topicVOList = TopicFacade.batchQueryTopics(page, pageSize);
+            topicVOList = TopicFacade.batchQueryTopics(0, page, pageSize);
         } catch (PageSizeLimitException e) {
             log.error("获取主帖列表失败，分页查询page，pageSize过大，参数：page:{},pageSize:{}", page, pageSize);
             return Collections.emptyList();
@@ -40,8 +42,15 @@ public class DiscussServiceImpl implements DiscussService {
             return Collections.emptyList();
         }
         List<DisscussVo> disscussVoList = new ArrayList<>();
-        List<Long> userIdList = topicVOList.stream().map(TopicVO::getGaeaId).collect(Collectors.toList());
-        Map<Long, UserInfo> userInfo = (Map) UserUtils.getUserInfoByIdList(userIdList).getData();
+        Set<Long> userIdset = topicVOList.stream().map(TopicVO::getGaeaId).collect(Collectors.toSet());
+        List<Long> userIdList = new ArrayList<>(userIdset);
+        Map<Long, UserInfo> userInfo = new HashMap<>();
+        try {
+            userInfo = (Map) UserUtils.getUserInfoByIdList(userIdList).getData();
+        } catch (Exception e) {
+            System.out.println("Message: " + e);
+        }
+
 
         for (TopicVO topicVO : topicVOList) {
             DisscussVo disscussVo = new DisscussVo();
@@ -51,10 +60,39 @@ public class DiscussServiceImpl implements DiscussService {
             disscussVo.setGaeaid(topicVO.getGaeaId());
             disscussVo.setImageId(userInfo.get(topicVO.getGaeaId()).getImageId());
             disscussVo.setUsername(userInfo.get(topicVO.getGaeaId()).getNickname());
-            disscussVo.setReplyNum(280);
+            Long replyCount = 0L;
+            try {
+                replyCount = ReplyFacade.getReplyCount(topicVO.getId());
+            } catch (TTransportException e) {
+                e.printStackTrace();
+            }
+            disscussVo.setReplyNum(replyCount);
             disscussVoList.add(disscussVo);
         }
         return disscussVoList;
+    }
+
+    @Override
+    public Long getDiscussCount() {
+        Long count = 0L;
+        try {
+            count = TopicFacade.getTopicCount(0);
+        } catch (TTransportException e) {
+            log.error("获取主帖总数失败");
+            return 0L;
+        }
+        return count;
+    }
+
+    @Override
+    public Long getReplyCount(Long topicId) {
+        Long replyCount = 0L;
+        try {
+            replyCount = ReplyFacade.getReplyCount(topicId);
+        } catch (TTransportException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -126,7 +164,13 @@ public class DiscussServiceImpl implements DiscussService {
         disscussVo.setGaeaid(topicVO.getGaeaId());
         disscussVo.setUsername(user.getNickname());
         disscussVo.setCategoryId(topicVO.getCategoryId());
-        disscussVo.setReplyNum(280);
+        Long replyCount = 0L;
+        try {
+            replyCount = ReplyFacade.getReplyCount(topicVO.getId());
+        } catch (TTransportException e) {
+            e.printStackTrace();
+        }
+        disscussVo.setReplyNum(replyCount);
         return disscussVo;
     }
 
