@@ -1,8 +1,11 @@
 package com.aries.orion.controller;
 
+import com.aries.orion.constants.SystemStatus;
+import com.aries.orion.model.HttpResponse;
 import com.aries.orion.model.User;
 import com.aries.user.gaea.client.model.GaeaResponse;
 import com.aries.user.gaea.client.model.UserRegisterVo;
+import com.aries.user.gaea.client.model.UserVo;
 import com.aries.user.gaea.client.utils.UserUtils;
 import com.aries.user.gaea.contact.model.UserLoginDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 
 @Controller
@@ -35,22 +42,27 @@ public class UserController {
 
     @PostMapping("/login")
     @ResponseBody
-    public String login(@RequestBody User user) {
+    public String login(@RequestBody User user, HttpServletResponse httpServletResponse) {
         UserLoginDTO userLoginDTO = new UserLoginDTO();
         userLoginDTO.setLoginId(user.getPhonenumber());
         userLoginDTO.setPassword(user.getPassword());
         userLoginDTO.setLoginType(0);
         GaeaResponse response = UserUtils.login(userLoginDTO);
         if (response.getData() != null) {
-            return (String) response.getData();
+            UserVo userVo = (UserVo) response.getData();
+            httpServletResponse.addCookie(new Cookie("cookie", userVo.getCookie()));
+            System.out.println(userVo.getCookie());
+            return HttpResponse.of(SystemStatus.SUCCESS);
         } else {
-            return "登录失败，请重新注册";
+            System.out.println("登录失败，请重新登录");
+            return HttpResponse.of(SystemStatus.SYSTEM_ERROR);
         }
     }
 
     @GetMapping("/loginto")
-    public String test() {
-        return "login";
+    public ModelAndView test() {
+        ModelAndView modelAndView = new ModelAndView("login");
+        return modelAndView;
     }
 
     @GetMapping("/reg")
