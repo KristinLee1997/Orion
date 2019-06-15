@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 
 @Controller
@@ -42,7 +42,7 @@ public class UserController {
 
     @PostMapping("/login")
     @ResponseBody
-    public String login(@RequestBody User user, HttpServletResponse httpServletResponse) {
+    public String login(@RequestBody User user, HttpServletRequest httpServletRequest) {
         UserLoginDTO userLoginDTO = new UserLoginDTO();
         userLoginDTO.setLoginId(user.getPhonenumber());
         userLoginDTO.setPassword(user.getPassword());
@@ -50,8 +50,8 @@ public class UserController {
         GaeaResponse response = UserUtils.login(userLoginDTO);
         if (response.getData() != null) {
             UserVo userVo = (UserVo) response.getData();
-            httpServletResponse.addCookie(new Cookie("cookie", userVo.getCookie()));
             System.out.println(userVo.getCookie());
+            httpServletRequest.getSession().setAttribute("ticket", userVo.getCookie());
             return HttpResponse.of(SystemStatus.SUCCESS);
         } else {
             System.out.println("登录失败，请重新登录");
