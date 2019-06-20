@@ -15,6 +15,7 @@
                             <span style="font-size: 22px" th:text="${article.number}"></span>
                             <span style="font-size: 22px">| </span>
                             <span style="font-size: 22px" th:text="${article.title}"></span>
+                            <span style="font-size: 22px;display: none" id="article_id" th:text="${article.id}"></span>
                         </div>
                         <!--                        <div class="layui-card-body" style="margin: 10px">-->
                         <!--                            &lt;!&ndash;                            <div class="sidebar"></div>&ndash;&gt;-->
@@ -22,8 +23,7 @@
                         <!--                        </div>-->
 
                         <div class="layui-card-body" style="margin: 10px">
-                            <div id="article-content">
-                            </div>
+                            <div id="article-content"></div>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
 <script type="text/javascript" src="/static/login/jquery/jquery.min.js"></script>
 <script>
     $.ajax({
-        url: "/study/article/content/1",
+        url: "/study/article/content/" + $("#article_id").text(),
         type: "get",
         contentType: "application/json",
         success: function (data) {

@@ -52,6 +52,7 @@ public class StudyServiceImpl implements StudyService {
     public List<Article> getArticleListByCourseId(Long courseId) {
         ArticleExample articleExample = new ArticleExample();
         articleExample.createCriteria().andCourseIdEqualTo(courseId);
+        articleExample.setOrderByClause("number");
         List<Article> articleList = articleMapper.selectByExampleWithBLOBs(articleExample);
         return articleList;
     }
