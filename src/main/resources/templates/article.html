@@ -16,9 +16,14 @@
                             <span style="font-size: 22px">| </span>
                             <span style="font-size: 22px" th:text="${article.title}"></span>
                         </div>
+                        <!--                        <div class="layui-card-body" style="margin: 10px">-->
+                        <!--                            &lt;!&ndash;                            <div class="sidebar"></div>&ndash;&gt;-->
+                        <!--                            <div th:text="${article.content}"></div>-->
+                        <!--                        </div>-->
+
                         <div class="layui-card-body" style="margin: 10px">
-<!--                            <div class="sidebar"></div>-->
-                            <div th:text="${article.content}"></div>
+                            <div id="article-content">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -34,6 +39,24 @@
     //     $('.sidebar').load('/study/article/detail/1');
     // });
 </script>
-
+<script type="text/javascript" src="/static/login/jquery/jquery.min.js"></script>
+<script>
+    $.ajax({
+        url: "/study/article/content/1",
+        type: "get",
+        contentType: "application/json",
+        success: function (data) {
+            // if(data.success){
+            //     window.location = "index";
+            // }else{
+            //     layer.msg(data.msg);
+            // }
+            console.log(data.content)
+            $("#article-content").html(data.content)
+        }, error: function (e, r) {
+            console.log("error----")
+        }
+    })
+</script>
 </body>
 </html>

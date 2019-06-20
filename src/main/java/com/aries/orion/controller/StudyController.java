@@ -1,5 +1,6 @@
 package com.aries.orion.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.aries.orion.constants.SystemStatus;
 import com.aries.orion.model.HttpResponse;
 import com.aries.orion.model.po.Article;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -57,5 +59,12 @@ public class StudyController {
         Article article = studyService.getArticleById(id);
         modelAndView.addObject("article", article);
         return modelAndView;
+    }
+
+    @GetMapping(value = "/article/content/{id}", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String getContent(@PathVariable("id") Long id) {
+        Article article = studyService.getArticleById(id);
+        return JSON.toJSONString(article);
     }
 }

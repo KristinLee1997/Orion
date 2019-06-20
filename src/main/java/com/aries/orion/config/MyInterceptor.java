@@ -1,5 +1,8 @@
 package com.aries.orion.config;
 
+import com.aries.user.gaea.client.model.GaeaResponse;
+import com.aries.user.gaea.client.model.UserVo;
+import com.aries.user.gaea.client.utils.UserUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -15,6 +18,9 @@ public class MyInterceptor implements HandlerInterceptor {
         String ticket = (String) session.getAttribute("ticket"); //获取登录的session信息
         if (ticket != null) {
             System.out.println("获取到cookie：" + ticket);
+            GaeaResponse gaeaResponse = UserUtils.getUserInfoByCookie(ticket);
+            UserVo userVo = (UserVo) gaeaResponse.getData();
+            httpServletRequest.setAttribute("uuu", userVo);
             return true;
         } else {
             httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/user/loginto");  //未登录自动跳转界面

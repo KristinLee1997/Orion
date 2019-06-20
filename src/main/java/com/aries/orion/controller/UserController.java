@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 
 @Controller
@@ -52,11 +51,36 @@ public class UserController {
             UserVo userVo = (UserVo) response.getData();
             System.out.println(userVo.getCookie());
             httpServletRequest.getSession().setAttribute("ticket", userVo.getCookie());
+            httpServletRequest.setAttribute("uuu",userVo);
             return HttpResponse.of(SystemStatus.SUCCESS);
         } else {
             System.out.println("登录失败，请重新登录");
             return HttpResponse.of(SystemStatus.SYSTEM_ERROR);
         }
+    }
+
+    @GetMapping("/logout")
+    public ModelAndView logout(HttpServletRequest httpServletRequest) {
+        ModelAndView modelAndView = new ModelAndView("index");
+        httpServletRequest.getSession().invalidate();
+        if (httpServletRequest.getSession().getAttribute("ticket") == null) {
+            return modelAndView;
+        }
+        GaeaResponse gaeaResponse = null;
+        try {
+            gaeaResponse = UserUtils.getUserInfoByCookie((String) httpServletRequest.getSession().getAttribute("ticket"));
+        } catch (Exception e) {
+            log.warn("用户退出登录操作，通过cookie查询用户信息失败");
+        }
+        if (gaeaResponse.getData() == null) {
+            return modelAndView;
+        }
+        UserVo userVo = (UserVo) gaeaResponse.getData();
+        if (userVo.getPhoneNumber() == null) {
+            return modelAndView;
+        }
+        UserUtils.logout(userVo.getPhoneNumber());
+        return modelAndView;
     }
 
     @GetMapping("/loginto")
@@ -66,8 +90,8 @@ public class UserController {
     }
 
     @GetMapping("/reg")
-    public String tesreg() {
-        return "register";
+    public ModelAndView tesreg() {
+        ModelAndView modelAndView = new ModelAndView("register");
+        return modelAndView;
     }
-
 }

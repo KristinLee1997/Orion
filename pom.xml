@@ -156,6 +156,11 @@
             <groupId>com.aries</groupId>
             <artifactId>Phoenix</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.aries.email</groupId>
+            <artifactId>felt-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>

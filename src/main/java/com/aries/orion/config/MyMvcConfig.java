@@ -9,8 +9,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 public class MyMvcConfig extends WebMvcConfigurationSupport {
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-        registry.addResourceHandler("/templates/**").addResourceLocations("classpath:/templates/");
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/templates/**")
+                .addResourceLocations("classpath:/templates/");
         super.addResourceHandlers(registry);
     }
 
@@ -19,9 +21,7 @@ public class MyMvcConfig extends WebMvcConfigurationSupport {
         //addPathPattern后跟拦截地址，excludePathPatterns后跟排除拦截地址
         System.out.println("test====");
         registry.addInterceptor(new MyInterceptor()).addPathPatterns("/**")
-                .excludePathPatterns("/")
-                .excludePathPatterns("/user/loginto")
-                .excludePathPatterns("/user/login")
-                .excludePathPatterns("/user/reg");
+                .excludePathPatterns("/", "/user/loginto", "/user/login", "/user/reg")
+                .excludePathPatterns("/static/**", "/templates/**");
     }
 }
